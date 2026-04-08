@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workshop 4: Rozbor reálného rozhovoru</title>
+<style>
+:root{
+  --bright-blue:#2087ED;
+  --teal:#02A3A4;
+  --forest:#028661;
+  --apple:#0CB43F;
+  --orange:#FF6613;
+  --aubergine:#721C7A;
+  --stone:#245375;
+  --white:#FFFFFF;
+  --line:#D9E2EC;
+  --anthracite:#303030;
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow:0 10px 24px rgba(36, 83, 117, 0.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, Arial, Helvetica, sans-serif;
+  color:var(--anthracite);
+  background:linear-gradient(180deg,#F7F9FC 0%, #EEF4F8 100%);
+  line-height:1.6;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 60px;}
+.hero{
+  background:linear-gradient(135deg,var(--bright-blue) 0%, var(--stone) 100%);
+  color:var(--white);
+  border-radius:var(--radius);
+  padding:28px 26px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.section{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+h1{margin:0 0 8px;line-height:1.15}
+h2{margin:0 0 10px;color:var(--stone)}
+h3{margin:16px 0 8px;color:var(--stone)}
+p{margin:0 0 12px}
+ol,ul{margin:8px 0 0 22px}
+li{margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;background:#FBFCFE;}
+.quote{
+  background:#F8FBFE;
+  border:1px dashed #C7DDF4;
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:10px 0 14px;
+  font-weight:700;
+  color:var(--stone);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Workshop 4: Rozbor reálného rozhovoru</h1>
+    <p>Detailní návod pro manažera. Cíl: učit se z praxe na konkrétních situacích.</p>
+  </header>
+  <section class="section">
+    <div class="grid"><div class="box"><strong>Délka</strong><br>30 až 45 minut</div><div class="box"><strong>Pomůcky</strong><br>reálná situace z pobočky nebo stručný přepis rozhovoru</div><div class="box"><strong>Výstup</strong><br>tým ví, co fungovalo, co chybělo a co příště udělat jinak</div></div>
+    <h2>Krok po kroku</h2>
+    <ol><li><strong>Vyber jednu čerstvou situaci.</strong><br>Ideálně něco z posledních dnů, aby to bylo živé a uvěřitelné.</li><li><strong>Dej bezpečný rámec.</strong><br>Přímá řeč: <em>„Nedíváme se na to proto, abychom někoho shodili. Díváme se na to proto, abychom se z toho všichni něco naučili.“</em></li><li><strong>Nech bankéře stručně popsat, co se stalo.</strong><br>Co klient chtěl? Jak bylo téma otevřené? Na co se bankéř ptal? Jak rozhovor skončil?</li><li><strong>Rozebírej rozhovor po částech.</strong><br>Ptej se: Kde bylo téma otevřené dobře? Kde jsme se spokojili moc brzo s první odpovědí? Co jsme potřebovali zjistit víc?</li><li><strong>Hledej další možné otázky.</strong><br>Ptej se: Jaká otevřená otázka tady mohla zaznít? Co by pomohlo jít víc do hloubky? Jak by šlo lépe navázat?</li><li><strong>Hledej další možné řešení.</strong><br>Ptej se: Co dalšího tady mohlo klientovi dávat smysl? Kde byla příležitost pro rezervu, ochranu nebo návazné řešení?</li><li><strong>Zapoj tým.</strong><br>Přímá řeč: <em>„Kdybyste tam byli vy, co byste řekli jinak? Na co byste se doptali? Jaký další krok byste klientovi navrhli?“</em></li><li><strong>Zapiš 2 až 3 poučení a uzavři.</strong><br>Přímá řeč: <em>„Z téhle situace si bereme jedno jasné pravidlo: příště si pohlídáme právě tohle.“</em></li></ol>
+  </section>
+</div>
+</body>
+</html>

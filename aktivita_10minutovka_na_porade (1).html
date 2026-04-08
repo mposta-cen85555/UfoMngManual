@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aktivita: 10minutovka na poradě</title>
+<style>
+:root{
+  --bright-blue:#2087ED;
+  --teal:#02A3A4;
+  --forest:#028661;
+  --apple:#0CB43F;
+  --orange:#FF6613;
+  --aubergine:#721C7A;
+  --stone:#245375;
+  --white:#FFFFFF;
+  --line:#D9E2EC;
+  --anthracite:#303030;
+  --radius:10px;
+  --radius-sm:6px;
+  --shadow:0 10px 24px rgba(36, 83, 117, 0.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, Arial, Helvetica, sans-serif;
+  color:var(--anthracite);
+  background:linear-gradient(180deg,#F7F9FC 0%, #EEF4F8 100%);
+  line-height:1.6;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 60px;}
+.hero{
+  background:linear-gradient(135deg,var(--bright-blue) 0%, var(--stone) 100%);
+  color:var(--white);
+  border-radius:var(--radius);
+  padding:28px 26px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.section{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+h1{margin:0 0 8px;line-height:1.15}
+h2{margin:0 0 10px;color:var(--stone)}
+h3{margin:16px 0 8px;color:var(--stone)}
+p{margin:0 0 12px}
+ol,ul{margin:8px 0 0 22px}
+li{margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;background:#FBFCFE;}
+.quote{
+  background:#F8FBFE;
+  border:1px dashed #C7DDF4;
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  margin:10px 0 14px;
+  font-weight:700;
+  color:var(--stone);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Aktivita: 10minutovka na poradě</h1>
+    <p>Krátký formát pro dny, kdy není prostor na celý workshop.</p>
+  </header>
+  <section class="section">
+    <div class="grid"><div class="box"><strong>Délka</strong><br>10 minut</div><div class="box"><strong>Pomůcky</strong><br>1 reálný klient nebo 1 aktuální situace</div><div class="box"><strong>Výstup</strong><br>každý si odnáší jednu otázku nebo jednu větu do praxe</div></div>
+    <h2>Krok po kroku</h2>
+    <ol><li><strong>Vyber jednoho bankéře a jednoho reálného klienta.</strong></li><li><strong>Nech bankéře 2 minuty popsat situaci.</strong><br>Co ví, co neví a co potřebuje zjistit.</li><li><strong>Polož 2 až 3 doplňující otázky.</strong><br>Například: Co ještě potřebuješ pochopit? Jak se na to klienta zeptáš? Kde je tady další příležitost?</li><li><strong>Zapoj tým.</strong><br>Přímá řeč: <em>„Co byste se klienta ptali vy?“</em></li><li><strong>Uzavři to jedním pravidlem.</strong><br>Přímá řeč: <em>„Dnes chci, aby si každý odnesl jednu otázku nebo jednu větu, kterou ještě dnes použije.“</em></li></ol>
+  </section>
+</div>
+</body>
+</html>
