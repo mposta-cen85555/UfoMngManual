@@ -1,545 +1,1141 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Manuál pro manažery po skončení úvěrové kampaně</title>
-<style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manuál pro manažery po skončení úvěrové kampaně</title>
+  <style>
     :root{
-
       --bright-blue:#2087ED;
-
       --teal:#02A3A4;
-
       --forest:#028661;
-
       --apple:#0CB43F;
-
       --orange:#FF6613;
-
       --aubergine:#721C7A;
-
       --stone:#245375;
-
       --white:#FFFFFF;
-
-      --light-grey:#EAEAF0;
-
-      --dark-grey:#6C7999;
-
-      --anthracite:#303030;
-
-      --bg:#F7F9FC;
-
-      --card:#FFFFFF;
-
+      --light:#F7F9FC;
       --line:#D9E2EC;
-
-      --shadow:0 10px 24px rgba(36, 83, 117, 0.10);
-
-      --radius:10px;
-
-      --radius-sm:6px;
-
+      --text:#303030;
+      --muted:#6C7999;
+      --shadow:0 10px 24px rgba(36,83,117,.10);
+      --shadow-soft:0 6px 16px rgba(36,83,117,.08);
+      --radius:16px;
+      --radius-sm:12px;
     }
 
     *{box-sizing:border-box}
-
     html{scroll-behavior:smooth}
-
     body{
-
       margin:0;
-
       font-family:Inter, Arial, Helvetica, sans-serif;
-
-      color:var(--anthracite);
-
-      background:linear-gradient(180deg, #F7F9FC 0%, #EEF4F8 100%);
-
+      color:var(--text);
+      background:linear-gradient(180deg,#F7F9FC 0%, #EEF4F8 100%);
       line-height:1.6;
-
     }
 
-    .wrap{max-width:1200px;margin:0 auto;padding:28px 20px 80px;}
+    .wrap{
+      max-width:1180px;
+      margin:0 auto;
+      padding:24px 16px 60px;
+    }
 
     .hero{
-
-      background:linear-gradient(135deg, var(--bright-blue) 0%, var(--stone) 100%);
-
+      background:linear-gradient(135deg,var(--bright-blue) 0%, var(--stone) 100%);
       color:var(--white);
-
       border-radius:var(--radius);
-
-      padding:36px 32px;
-
+      padding:34px 30px;
       box-shadow:var(--shadow);
-
-      margin-bottom:20px;
-
+      margin-bottom:18px;
       position:relative;
-
       overflow:hidden;
-
     }
 
     .hero::after{
-
       content:"";
-
       position:absolute;
-
-      right:-60px;
-
+      right:-50px;
       top:-40px;
-
-      width:240px;
-
-      height:240px;
-
-      border-radius:24px;
-
-      background:linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
-
+      width:220px;
+      height:220px;
+      border-radius:28px;
       transform:rotate(18deg);
-
+      background:rgba(255,255,255,.08);
     }
 
-    .hero h1{margin:0 0 10px;font-size:2.15rem;line-height:1.12;position:relative;z-index:1;}
+    .hero h1{
+      margin:0 0 10px;
+      font-size:2.1rem;
+      line-height:1.08;
+      position:relative;
+      z-index:1;
+    }
 
-    .hero p{margin:0;font-size:1.02rem;max-width:920px;opacity:.97;position:relative;z-index:1;}
+    .hero p{
+      margin:0;
+      max-width:800px;
+      font-size:1.03rem;
+      opacity:.97;
+      position:relative;
+      z-index:1;
+    }
 
-    .nav{
+    .section{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+      margin-bottom:18px;
+    }
 
+    .section h2{
+      margin:0 0 12px;
+      color:var(--stone);
+      font-size:1.35rem;
+    }
+
+    .intro-note{
+      margin-top:12px;
+      padding:14px 16px;
+      background:linear-gradient(90deg, rgba(2,163,164,.08), rgba(32,135,237,.06));
+      border-left:4px solid var(--teal);
+      border-radius:10px;
+      color:var(--stone);
+      font-weight:700;
+    }
+
+    .roadmap-shell{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .roadmap-sticky{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      padding:18px 22px 16px;
+    }
+
+    .roadmap-title{
+      margin:0 0 14px;
+      color:var(--stone);
+      font-size:1.35rem;
+      font-weight:800;
+    }
+
+    .roadmap-top{
+      position:relative;
       display:grid;
-
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-
+      grid-template-columns:repeat(7,1fr);
       gap:10px;
-
-      margin:18px 0 22px;
-
+      padding-top:18px;
     }
 
-    .nav a{
-
-      display:block;text-decoration:none;padding:12px 14px;border-radius:999px;border:1px solid #D6E5F5;
-
-      background:#F1F6FB;color:var(--stone);font-weight:700;text-align:center;transition:all .2s ease;
-
+    .roadmap-line{
+      position:absolute;
+      left:5%;
+      right:5%;
+      top:31px;
+      height:4px;
+      background:linear-gradient(90deg,var(--bright-blue),var(--teal),var(--orange));
+      border-radius:999px;
+      z-index:0;
+      opacity:.25;
     }
 
-    .nav a:hover{background:var(--bright-blue);color:var(--white);border-color:var(--bright-blue);transform:translateY(-1px);}
+    .roadmap-step{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      color:var(--stone);
+      padding:0;
+      font:inherit;
+    }
 
-    .section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin-bottom:18px;box-shadow:var(--shadow);}
+    .roadmap-step:hover .step-label{
+      color:var(--bright-blue);
+    }
 
-    h2{margin:0 0 10px;font-size:1.65rem;color:var(--stone);}
+    .step-dot{
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      margin:0 auto 10px;
+      background:#cfd8e3;
+      box-shadow:0 0 0 6px rgba(32,135,237,.08);
+      transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
 
-    h3{margin:0 0 8px;font-size:1.1rem;color:var(--stone);}
+    .roadmap-step[data-color="blue"] .step-dot{background:var(--bright-blue)}
+    .roadmap-step[data-color="teal"] .step-dot{background:var(--teal)}
+    .roadmap-step[data-color="orange"] .step-dot{background:var(--orange)}
 
-    h4{margin:0 0 8px;font-size:1rem;color:var(--stone);}
+    .roadmap-step.active .step-dot{
+      transform:scale(1.18);
+      box-shadow:0 0 0 9px rgba(32,135,237,.15);
+    }
 
-    p{margin:0 0 12px}
+    .roadmap-step.active .step-label{
+      color:var(--bright-blue);
+      font-weight:800;
+    }
 
-    ul,ol{margin:8px 0 0 22px}
+    .step-label{
+      font-size:.96rem;
+      line-height:1.25;
+      font-weight:700;
+      transition:color .2s ease;
+    }
 
-    li{margin:6px 0}
+    .panel-shell{
+      padding:22px;
+      min-height:520px;
+    }
 
-    .lead{font-size:1.05rem;color:var(--anthracite);}
+    .panel{display:none}
+    .panel.active{display:block}
 
-    .callout{
+    .panel h3{
+      margin:0 0 10px;
+      color:var(--stone);
+      font-size:1.18rem;
+    }
 
-      background:linear-gradient(90deg, rgba(2,163,164,0.10), rgba(32,135,237,0.08));
+    .panel h4{
+      margin:16px 0 8px;
+      color:var(--stone);
+      font-size:1rem;
+    }
 
-      border-left:5px solid var(--teal);border-radius:var(--radius-sm);padding:14px 16px;margin-top:12px;font-weight:700;color:var(--stone);
+    .panel p{margin:0 0 12px}
+    .panel ul,.panel ol{margin:8px 0 14px 22px}
+    .panel li{margin:6px 0}
 
+    .subgrid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .mini{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+      background:#FBFCFE;
+    }
+
+    .mini h4{
+      margin:0 0 8px;
+      color:var(--stone);
+      font-size:1rem;
     }
 
     .quote{
-
-      background:#F8FBFE;border:1px dashed #C7DDF4;border-radius:var(--radius-sm);padding:14px 16px;margin:10px 0 14px;font-weight:700;color:var(--stone);
-
-    }
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px;}
-
-    .card{border:1px solid var(--line);border-radius:var(--radius);background:#FBFCFE;padding:16px;}
-
-    .card.blue{border-top:5px solid var(--bright-blue)}
-
-    .card.teal{border-top:5px solid var(--teal)}
-
-    .card.forest{border-top:5px solid var(--forest)}
-
-    .card.apple{border-top:5px solid var(--apple)}
-
-    .card.orange{border-top:5px solid var(--orange)}
-
-    .card.aubergine{border-top:5px solid var(--aubergine)}
-
-    .steps,.timeline{display:grid;gap:12px;margin-top:14px;}
-
-    .step,.timebox{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:#FFF;}
-
-    .step-title{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-weight:700;color:var(--stone);}
-
-    .badge{
-
-      display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:999px;background:var(--bright-blue);color:var(--white);font-weight:700;flex:0 0 auto;
-
-    }
-
-    .time{
-
-      display:inline-block;padding:5px 10px;border-radius:999px;background:#F1F6FB;border:1px solid #D6E5F5;color:var(--stone);font-weight:700;margin-bottom:8px;
-
-    }
-
-    .worksheet{border:1px solid var(--line);border-radius:var(--radius);background:#FFF;padding:18px;margin-top:14px;}
-
-    .field{min-height:54px;border:1px solid #DDE6EF;border-radius:8px;background:#FFF;padding:10px 12px;margin:8px 0 12px;}
-
-    .download-btn{
-
-      display:inline-block;margin-top:12px;padding:10px 14px;border-radius:999px;background:var(--bright-blue);color:var(--white);text-decoration:none;font-weight:700;transition:transform .2s ease, background .2s ease;
-
-    }
-
-    .download-btn:hover{background:var(--stone);transform:translateY(-1px);} .download-btn{cursor:pointer;}
- 
-    .action-row{
-
-      display:flex;
-
-      gap:10px;
-
-      flex-wrap:wrap;
-
-      margin-top:12px;
-
-    }
-
-    .secondary-btn{
-
-      display:inline-block;
-
-      padding:10px 14px;
-
-      border-radius:999px;
-
-      background:#F1F6FB;
-
-      color:var(--stone);
-
-      text-decoration:none;
-
+      background:#F8FBFE;
+      border:1px dashed #C7DDF4;
+      border-radius:10px;
+      padding:12px 14px;
+      margin:12px 0 0;
       font-weight:700;
+      color:var(--stone);
+    }
 
-      border:1px solid #D6E5F5;
+    /* activities ux */
+    .activity-switcher{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:14px;
+      margin-bottom:16px;
+    }
 
-      transition:transform .2s ease, background .2s ease;
-
+    .activity-tile{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#FBFCFE;
+      padding:14px;
       cursor:pointer;
-
+      transition:all .2s ease;
+      text-align:left;
+      color:var(--stone);
+      font:inherit;
+      box-shadow:none;
     }
 
-    .secondary-btn:hover{
-
-      background:#E5F0FA;
-
+    .activity-tile:hover{
+      border-color:#BFD7F2;
+      background:#F7FBFF;
       transform:translateY(-1px);
-
     }
 
-    .ios-note{
+    .activity-tile.active{
+      border-color:var(--bright-blue);
+      background:#EEF6FD;
+      box-shadow:0 0 0 2px rgba(32,135,237,.08) inset;
+    }
 
+    .activity-tile-title{
+      font-weight:800;
+      margin-bottom:6px;
+      line-height:1.3;
+    }
+
+    .activity-tile-meta{
+      font-size:.9rem;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
+    .activity-detail-view{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:var(--white);
+      padding:18px;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .activity-detail-panel{display:none}
+    .activity-detail-panel.active{display:block}
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      margin-top:14px;
+    }
+
+    .detail-block{
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#FBFCFE;
+      padding:14px;
+    }
+
+    .detail-block h4{
+      margin-top:0;
+    }
+
+    .activity-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#F1F6FB;
+      border:1px solid #D6E5F5;
+      color:var(--stone);
+      font-size:.88rem;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .downloads{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .download-card{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+      background:var(--white);
+    }
+
+    .btn{
+      display:inline-block;
       margin-top:10px;
-
-      font-size:.92rem;
-
-      color:var(--dark-grey);
-
+      padding:10px 14px;
+      border-radius:999px;
+      background:var(--bright-blue);
+      color:var(--white);
+      text-decoration:none;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      font:inherit;
     }
- 
-    @media print{body{background:#fff}.section,.hero{box-shadow:none}.nav{display:none}}
-</style>
+
+    .btn:hover{
+      background:var(--stone);
+    }
+
+    .btn.secondary{
+      background:#F1F6FB;
+      color:var(--stone);
+      border:1px solid #D6E5F5;
+    }
+
+    .btn.secondary:hover{
+      background:#E6F1FB;
+    }
+
+    .tip{
+      background:#FFF8F2;
+      border-left:4px solid var(--orange);
+      border-radius:10px;
+      padding:12px 14px;
+      color:var(--stone);
+      margin-top:12px;
+    }
+
+    .small{
+      font-size:.92rem;
+      color:var(--muted);
+    }
+
+    @media (max-width:980px){
+      .roadmap-top{
+        grid-template-columns:1fr 1fr;
+      }
+      .roadmap-line{
+        display:none;
+      }
+      .detail-grid{
+        grid-template-columns:1fr;
+      }
+      .downloads{
+        grid-template-columns:1fr;
+      }
+      .panel-shell{
+        min-height:0;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="wrap">
-<header class="hero">
-<h1>Manuál pro manažery po skončení úvěrové kampaně</h1>
-<p>Praktický návod, co přesně má manažer dělat se svými lidmi po kampani, aby téma úvěrů a bydlení nespadlo, ale stalo se běžnou součástí každodenní práce pobočky.</p>
-</header>
- 
-    <nav class="nav">
-<a href="#cil">Hlavní cíl</a>
-<a href="#co-zustava">Co má zůstat</a>
-<a href="#po-kampani">Co udělat hned</a>
-<a href="#tydenni-rytmus">Týdenní rytmus</a>
-<a href="#one-to-one">1:1 s bankéřem</a>
-<a href="#ranni-trenink">Ranní trénink</a>
-<a href="#workshopy">Workshopy</a>
-<a href="#naslech">Náslech</a>
-<a href="#listy">Pracovní listy</a>
-</nav>
- 
-    <section class="section" id="cil">
-<h2>Hlavní cíl</h2>
-<p class="lead">Po kampani nesmí téma zmizet. Cíl manažera je jednoduchý: <strong>udržet úvěry a bydlení živé tak dlouho, dokud se z nich nestane běžný návyk bankéře.</strong></p>
-<div class="callout">Po kampani nezačíná klid. Po kampani začíná pravidelná manažerská práce: vracet téma, chtít přípravu, trénovat otázky, dělat náslechy a dávat konkrétní zpětnou vazbu.</div>
-</section>
- 
-    <section class="section" id="co-zustava">
-<h2>Co má po kampani zůstat v každodenní práci</h2>
-<div class="grid">
-<div class="card blue">
-<h3>1. Bankéř se na úvěry a bydlení ptá pravidelně</h3>
-<ul>
-<li>Jak dnes přemýšlíte o svém bydlení?</li>
-<li>Co se u vás doma nebo v rodině teď mění?</li>
-<li>Jaké plány máte kolem bydlení, oprav nebo vybavení domácnosti?</li>
-<li>Jak máte dnes nastavenou rezervu pro větší nebo nečekané výdaje?</li>
-</ul>
-</div>
-<div class="card teal">
-<h3>2. Bankéř dělá krátkou přípravu na schůzku</h3>
-<p>Příprava nemá být složitá. Stačí 3 minuty: rychle se podívá na klienta, ujasní si, co už ví, co potřebuje zjistit a s jakou jednou až dvěma otázkami na schůzku jde.</p>
-</div>
-<div class="card forest">
-<h3>3. Bankéř si připravuje otázky</h3>
-<p>Nejen cíl schůzky. Má si jednoduše říct: co o klientovi ještě nevím, co potřebuji zjistit a jak se ho na to zeptám.</p>
-</div>
-<div class="card apple">
-<h3>4. Bankéř přemýšlí v řešení</h3>
-<p>Nehledá jen jeden produkt. Přemýšlí, co klientovi dává smysl jako celek: úvěr, rezerva, ochrana, spoření, další návazné řešení.</p>
-</div>
-<div class="card orange">
-<h3>5. Bankéř pracuje s rozpočtem</h3>
-<p>Neřeší jen nabídku. Řeší, co klient unese, co mu chybí a co mu pomůže zvládnout situaci bezpečněji a dlouhodoběji.</p>
-</div>
-<div class="card aubergine">
-<h3>6. Manažer se k tématu pořád vrací</h3>
-<p>Nestačí to říct jednou. Manažer musí téma opakovat, kontrolovat, otevírat na poradách, vracet do 1:1 a hodnotit v násleších.</p>
-</div>
-</div>
-</section>
- 
-    <section class="section" id="po-kampani">
-<h2>Co má manažer udělat hned po skončení kampaně</h2>
-<div class="steps">
-<div class="step">
-<div class="step-title"><span class="badge">1</span>Řekni týmu, že téma nekončí</div>
-<div class="quote">„Kampaň skončila, ale téma nekončí. Budeme se na to dál ptát, dál to trénovat a dál zlepšovat.“</div>
-</div>
-<div class="step">
-<div class="step-title"><span class="badge">2</span>Nastav jednoduchá pravidla</div>
-<ul>
-<li>Každý bankéř má být připravený na klientské schůzky.</li>
-<li>Každý bankéř má mít připravené otázky, ne jen cíl schůzky.</li>
-<li>Každý bankéř má aktivně otevírat téma bydlení a úvěrů.</li>
-<li>Každý bankéř má hledat i návazná řešení.</li>
-<li>Každý bankéř má být připraven své uvažování vysvětlit.</li>
-</ul>
-</div>
-<div class="step">
-<div class="step-title"><span class="badge">3</span>Zařaď téma do ranních porad a 1:1</div>
-<p>Ne jednou za měsíc. Ideálně každý týden krátký blok a pravidelně i v individuálních rozhovorech.</p>
-</div>
-<div class="step">
-<div class="step-title"><span class="badge">4</span>Začni dělat náslechy a rozbory</div>
-<p>Nevěř jen tomu, že se to děje. Dívej se a poslouchej, jak bankéř otevírá téma, jak se ptá, jak reaguje a co doporučuje.</p>
-</div>
-</div>
-</section>
- 
-    <section class="section" id="tydenni-rytmus">
-<h2>Týdenní rytmus manažera</h2>
-<p class="lead">Tohle je jednoduchý provozní rytmus, který má manažer držet každý týden.</p>
-<div class="timeline">
-<div class="timebox"><div class="time">Každý týden</div><h3>1. Otevřít téma na poradě</h3><p>Vyhraď 10 až 15 minut na úvěry a bydlení. Připomeň, proč je to důležité, a vytáhni konkrétní situace z praxe.</p></div>
-<div class="timebox"><div class="time">Každý týden</div><h3>2. Projít 2 až 4 klientské přípravy</h3><p>Nech bankéře popsat klienta, logiku přípravy, připravené otázky a možné další řešení.</p></div>
-<div class="timebox"><div class="time">Každý týden</div><h3>3. Udělat krátký trénink</h3><p>Jedna modelovka, jedna kombinace produktů, jeden rozbor rozhovoru nebo příprava na schůzku.</p></div>
-<div class="timebox"><div class="time">Každý týden</div><h3>4. Udělat 1:1 nebo mini koučink</h3><p>Každý bankéř potřebuje individuální vedení, ne jen společnou poradu.</p></div>
-<div class="timebox"><div class="time">Každý týden</div><h3>5. Udělat náslech nebo rozbor konkrétní situace</h3><p>Po náslechu dej jasnou zpětnou vazbu: co bylo dobré, co chybělo a co má bankéř udělat příště jinak.</p></div>
-</div>
-</section>
- 
-    <section class="section" id="one-to-one">
-<h2>Jak má vypadat 1:1 s bankéřem</h2>
-<p class="lead">Cíl 1:1 není jen kontrola. Cíl je vést bankéře k tomu, aby víc přemýšlel, víc se ptal, lépe se připravoval a nebál se tématu.</p>
-<div class="steps">
-<div class="step"><div class="step-title"><span class="badge">1</span>Vyber jednoho konkrétního klienta nebo jednu situaci</div><div class="quote">„Vezmi si jednoho konkrétního klienta, kterého teď řešíš. Pověz mi, co o něm víš a co s ním chceš dělat.“</div></div>
-<div class="step"><div class="step-title"><span class="badge">2</span>Nech bankéře popsat přípravu</div><ul><li>Jak ses na schůzku připravil?</li><li>Co už o klientovi víš?</li><li>Co o klientovi ještě potřebuješ zjistit?</li><li>Jaká je podle tebe hlavní potřeba klienta?</li></ul></div>
-<div class="step"><div class="step-title"><span class="badge">3</span>Ptej se na otázky, ne jen na nabídku</div><ul><li>Jak se klienta zeptáš, abys zjistil víc?</li><li>Která otázka ti pomůže pochopit jeho situaci?</li><li>Jak navážeš, když klient odpoví obecně?</li></ul></div>
-<div class="step"><div class="step-title"><span class="badge">4</span>Rozšiř uvažování bankéře</div><ul><li>Co dalšího by tomu klientovi mohlo dávat smysl?</li><li>Kde je prostor pro kombinaci produktů?</li><li>Jak by klientovi pomohla větší jistota, rezerva nebo ochrana?</li></ul></div>
-<div class="step"><div class="step-title"><span class="badge">5</span>Domluv jeden konkrétní úkol</div><div class="quote">„Nechci, aby ses zlepšil ve všem. Chci, aby ses tento týden soustředil na jednu konkrétní věc.“</div><ul><li>u 3 klientů otevřeš téma bydlení,</li><li>u 2 klientů si předem napíšeš otázky,</li><li>u 1 klienta navrhneš kombinaci produktů,</li><li>po jedné schůzce si uděláš sebereflexi.</li></ul></div>
-</div>
-</section>
- 
-    <section class="section" id="ranni-trenink">
-<h2>Jak má manažer odvézt ranní trénink</h2>
-<p class="lead">Jednoduchý formát na 20 až 40 minut. Bez složité přípravy. Prakticky, krátce a nad reálnými klienty.</p>
-<div class="timeline">
-<div class="timebox"><div class="time">Krok 1</div><h3>Vyber 2 až 4 klientské přípravy</h3><div class="quote">„Dnes si projdeme přípravy na klienty. Nezajímá mě jen cíl schůzky, ale hlavně otázky a logika, jak o klientovi přemýšlíš.“</div></div>
-<div class="timebox"><div class="time">Krok 2</div><h3>Jeden bankéř představí klienta</h3><p>Řekne, kdo je klient, co o něm ví, co o něm ještě neví a na co se chce zeptat.</p></div>
-<div class="timebox"><div class="time">Krok 3</div><h3>Manažer se začne doptávat</h3><ul><li>Co ještě potřebuješ pochopit?</li><li>Jak se na to klienta zeptáš?</li><li>Kde vidíš další příležitost?</li><li>Jak bys otevřel širší rozhovor o jeho situaci?</li></ul></div>
-<div class="timebox"><div class="time">Krok 4</div><h3>Zapoj ostatní</h3><div class="quote">„Pomozte mu. Co byste se klienta ptali vy? Co dalšího byste zvažovali? Jakou kombinaci byste tam viděli?“</div></div>
-<div class="timebox"><div class="time">Krok 5</div><h3>Vytáhni 1 až 2 jasná pravidla</h3><ul><li>Nejdeme na schůzku bez otázek.</li><li>Nekončíme u první potřeby.</li><li>U úvěru přemýšlíme i o rezervě a ochraně.</li><li>Klientovi doporučujeme řešení, ne izolovaný produkt.</li></ul></div>
-<div class="timebox"><div class="time">Krok 6</div><h3>Zadej malý úkol do praxe</h3><ul><li>Dnes každý otevře téma bydlení aspoň u jednoho klienta.</li><li>Každý si připraví otázky ke dvěma schůzkám.</li><li>Každý zkusí u jednoho klienta najít vhodnou kombinaci produktů.</li></ul></div>
-</div>
-</section>
- 
-    <section class="section" id="workshopy">
-<h2>Hotové tréninky a aktivity pro manažera</h2>
-<div class="grid">
-<div class="card blue">
-<h3>Workshop 1: Příprava na schůzku</h3>
-<p><strong>Cíl:</strong> naučit bankéře, že kvalitní schůzka začíná před schůzkou.</p>
-<ol><li>Vyber 2 až 3 klienty.</li><li>Nech bankéře udělat krátkou přípravu.</li><li>Chtej po nich, co ví, co neví a na co se zeptají.</li><li>Rozebírej, co ještě potřebují zjistit.</li><li>Na konci si každý zapíše 3 otázky do praxe.</li></ol>
-<div class="action-row">
-<a class="secondary-btn" href="workshop_1_priprava_na_schuzku.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="workshop_1_priprava_na_schuzku.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
- 
-        <div class="card teal">
-<h3>Workshop 2: Kombinace produktů</h3>
-<p><strong>Cíl:</strong> naučit bankéře přemýšlet v souvislostech, ne v jednom produktu.</p>
-<ol><li>Rozděl lidi do dvojic nebo trojic.</li><li>Každé skupině dej jednu kombinaci.</li><li>Nech je vymyslet 2 argumenty pro klienta.</li><li>Každá skupina krátce odprezentuje.</li><li>Na závěr dej krátký role-play.</li></ol>
-<p><strong>Příklady kombinací:</strong> úvěr + kontokorent, úvěr + kreditní karta, úvěr + pojištění, úvěr + spoření, úvěr + rezerva.</p>
-<div class="action-row">
-<a class="secondary-btn" href="workshop_2_kombinace_produktu.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="workshop_2_kombinace_produktu.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
- 
-        <div class="card forest">
-<h3>Workshop 3: Otázky místo produktů</h3>
-<p><strong>Cíl:</strong> naučit bankéře doptávat se tak, aby sami objevili potřebu klienta.</p>
-<ol><li>Vezmi typickou klientskou situaci.</li><li>Nech bankéře sepsat otevřené otázky.</li><li>Vyberte nejlepší formulace.</li><li>Zkoušejte, jak na odpověď klienta navázat.</li></ol>
-<div class="action-row">
-<a class="secondary-btn" href="workshop_3_otazky_misto_produktu.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="workshop_3_otazky_misto_produktu.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
- 
-        <div class="card orange">
-<h3>Workshop 4: Rozbor reálného rozhovoru</h3>
-<p><strong>Cíl:</strong> učit se z praxe, ne z teorie.</p>
-<ol><li>Vezmi reálnou situaci nebo rozhovor.</li><li>Rozeberte, kde bylo dobře otevřené téma.</li><li>Ukažte, kde chybělo doptání.</li><li>Hledejte, co dalšího šlo doporučit.</li></ol>
-<div class="action-row">
-<a class="secondary-btn" href="workshop_4_rozbor_realneho_rozhovoru.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="workshop_4_rozbor_realneho_rozhovoru.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
- 
-        <div class="card apple">
-<h3>Aktivita: 10minutovka na poradě</h3>
-<p><strong>Kdy:</strong> když nemáš prostor na celý workshop.</p>
-<ul><li>Jeden bankéř popíše klienta, kterého dnes řeší.</li><li>Ostatní doplní, na co by se ptali.</li><li>Manažer vytáhne 1 pravidlo do praxe.</li></ul>
-<div class="action-row">
-<a class="secondary-btn" href="aktivita_10minutovka_na_porade.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="aktivita_10minutovka_na_porade.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
- 
-        <div class="card aubergine">
-<h3>Aktivita: Sdílení dobré praxe</h3>
-<p><strong>Cíl:</strong> posilovat jistotu a ukazovat, že to jde.</p>
-<ul><li>Kdo tento týden dobře otevřel téma?</li><li>Kde se povedlo najít další příležitost?</li><li>Jaká formulace zafungovala?</li></ul>
-<div class="action-row">
-<a class="secondary-btn" href="aktivita_sdileni_dobre_praxe.html" target="_blank" rel="noopener">Otevřít detail</a>
-<a class="download-btn" href="aktivita_sdileni_dobre_praxe.html" target="_blank" rel="noopener">Stáhnout detail</a>
-</div>
-<div class="ios-note">Na iPadu doporučujeme nejdřív otevřít detail a případně ho uložit přes Sdílet.</div>
-</div>
-</div>
-</section>
- 
-    <section class="section" id="naslech">
-<h2>Jak má manažer dělat náslech</h2>
-<p class="lead">Náslech není jen kontrola. Je to nástroj rozvoje. Manažer má sledovat konkrétní body a po rozhovoru dát jednoduchou, použitelnou zpětnou vazbu.</p>
-<div class="grid">
-<div class="card blue">
-<h3>Co sleduj</h3>
-<ul>
-<li>jak bankéř otevřel téma potřeby?</li>
-<li>jak otevřeně se ptal?</li>
-<li>jak se doptával, když klient odpověděl obecně?</li>
-<li>jak hledal širší řešení pro klienta?</li>
-<li>jak vysvětlil přínos doporučení?</li>
-</ul>
-</div>
-<div class="card teal">
-<h3>Co dej po náslechu</h3>
-<ul>
-<li>1 věc, která byla dobrá,</li>
-<li>1 věc, kterou má příště udělat jinak,</li>
-<li>1 konkrétní věc, kterou si má vyzkoušet.</li>
-</ul>
-<div class="quote">„Tohle bylo silné. Tady ses mohl víc doptat. Příště si zkus pohlídat právě tohle.“</div>
-</div>
-</div>
-</section>
- 
-    <section class="section" id="listy">
-<h2>Pracovní listy</h2>
-<div class="worksheet">
-<h3>Pracovní list pro manažera – 1:1 s bankéřem</h3>
-<h4>Před 1:1 si připrav</h4>
-<div class="field">Jakého klienta nebo situaci budeme řešit?</div>
-<div class="field">Co chci u bankéře dnes rozvíjet?</div>
-<div class="field">Jaký jeden konkrétní posun od něj chci?</div>
-<h4>Na konci 1:1 zapiš</h4>
-<div class="field">Co bylo silné</div>
-<div class="field">Co potřebuje zlepšit</div>
-<div class="field">Na čem bude pracovat do příště</div>
-<div class="field">Jak to ověřím</div>
-</div>
- 
-      <div class="worksheet">
-<h3>Pracovní list pro manažera – náslech</h3>
-<div class="field">Jak bankéř otevřel téma?</div>
-<div class="field">Na co se ptal dobře?</div>
-<div class="field">Kde se měl doptat víc?</div>
-<div class="field">Jaké další řešení šlo nabídnout?</div>
-<div class="field">Jaký bude další rozvojový krok?</div>
-</div>
- 
-      <div class="worksheet">
-<h3>Pracovní list pro bankéře – příprava na schůzku</h3>
-<div class="field">Kdo je klient a co o něm vím?</div>
-<div class="field">Co o klientovi ještě nevím?</div>
-<div class="field">Co potřebuji zjistit?</div>
-<div class="field">Jaké 3 otevřené otázky si připravím?</div>
-<div class="field">Co může být hlavní řešení a co doplňkové řešení?</div>
-</div>
- 
-      <div class="worksheet">
-<h3>Pracovní list pro bankéře – sebereflexe po schůzce</h3>
-<div class="field">Jak se mi podařilo otevřít rozhovor o situaci klienta?</div>
-<div class="field">Na co jsem se ptal dobře?</div>
-<div class="field">Kde jsem se měl doptat víc?</div>
-<div class="field">Jakou příležitost jsem využil a jakou ne?</div>
-<div class="field">Co udělám příště lépe?</div>
-</div>
-</section>
- 
+  <div class="wrap">
+    <header class="hero">
+      <h1>Úvěry – roadmapa pro manažera</h1>
+      <p>Jednoduchá klikací roadmapa. Klikni nahoře na krok a dole se přepne jen obsah toho konkrétního tématu. U aktivit a pracovních listů je vše rovnou součástí stránky.</p>
+    </header>
+
     <section class="section">
-<h2>Co má manažer lidem doslova říkat</h2>
-<div class="quote">„Nechci po tobě slyšet jen cíl schůzky. Chci slyšet, co o klientovi víš, co chceš zjistit a na co se ho budeš ptát.“</div>
-<div class="quote">„Nepřipravuj si jen to, co klientovi nabídneš. Připrav si hlavně otázky. Dobrá otázka ti otevře víc než hotová nabídka.“</div>
-<div class="quote">„Nekonči u jedné potřeby. Přemýšlej, co tomu klientovi dává smysl jako celek.“</div>
-<div class="quote">„Nechci, abys byl specialista na všechno. Chci, abys uměl poznat příležitost, otevřít téma a dobře navázat.“</div>
-<div class="quote">„Tohle není jednorázová kampaň. Tohle je způsob práce, který chceme dostat do běžného fungování pobočky.“</div>
-</section>
-</div>
- 
- 
- 
+      <h2>K čemu tahle stránka slouží</h2>
+      <p>Tahle stránka je stručný návod, jak po kampani držet téma úvěrů v běžném provozu týmu. Není to katalog všeho možného. Je to pracovní rozcestník pro manažera.</p>
+      <div class="intro-note">Každý region má k dispozici byznys kouče, které může manažer využít pro sebe i pro své bankéře.</div>
+    </section>
+
+    <section class="roadmap-shell">
+      <div class="roadmap-sticky">
+        <div class="roadmap-title">Roadmapa</div>
+
+        <div class="roadmap-top" role="tablist" aria-label="Roadmapa kroků">
+          <div class="roadmap-line"></div>
+
+          <button class="roadmap-step active" data-target="panel1" data-color="blue" role="tab" aria-selected="true">
+            <div class="step-dot"></div>
+            <div class="step-label">1) Na co cílíme</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel2" data-color="teal" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">2) Insighty</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel3" data-color="orange" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">3) Týdenní rytmus</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel4" data-color="blue" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">4) Aktivity</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel5" data-color="teal" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">5) 1:1</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel6" data-color="orange" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">6) Co dělat s bankéřem</div>
+          </button>
+
+          <button class="roadmap-step" data-target="panel7" data-color="blue" role="tab" aria-selected="false">
+            <div class="step-dot"></div>
+            <div class="step-label">7) Pracovní listy</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-shell">
+        <section class="panel active" id="panel1" role="tabpanel">
+          <h3>Na co teď cílíme</h3>
+          <div class="subgrid">
+            <div class="mini">
+              <h4>Drill</h4>
+              <p>Úvěry musí být v týmu slyšet pořád dokola. Na poradách, v 1:1, při práci s insighty i při rozboru telefonů a schůzek.</p>
+            </div>
+            <div class="mini">
+              <h4>Telefon → Salesforce → schůzka → prodej</h4>
+              <p>Chceme návaznost od oslovení klienta až do výsledku.</p>
+            </div>
+            <div class="mini">
+              <h4>Konkrétní práce s lidmi</h4>
+              <p>Když se něco nehýbe, řešíme to nad konkrétním klientem a konkrétním krokem.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel2" role="tabpanel">
+          <h3>Nad jakými klienty má manažer s týmem pracovat</h3>
+          <div class="subgrid">
+            <div class="mini">
+              <h4>Úvěry</h4>
+              <ul>
+                <li>vyčerpané revolvingy</li>
+                <li>úvěr u konkurence</li>
+                <li>zamítnuté úvěry</li>
+                <li>klient čerpá revolvingový produkt</li>
+              </ul>
+            </div>
+            <div class="mini">
+              <h4>Buřinka</h4>
+              <ul>
+                <li>má nárok na řádný úvěr SS</li>
+                <li>navyšování UoB</li>
+                <li>refix</li>
+                <li>rekonstrukce</li>
+                <li>refinancování</li>
+              </ul>
+            </div>
+          </div>
+          <div class="quote">Manažer má s bankéřem projít: jaký insight klient má, proč je to příležitost, jakou otevřenou otázkou bankéř začne a jaký má být další krok.</div>
+        </section>
+
+        <section class="panel" id="panel3" role="tabpanel">
+          <h3>Co má manažer dělat každý týden</h3>
+          <ol>
+            <li>Krátký drill nad insighty.</li>
+            <li>Kontrola práce v Salesforce.</li>
+            <li>Rozbor jednoho telefonu nebo jedné schůzky.</li>
+            <li>1:1 s konkrétním člověkem.</li>
+          </ol>
+          <p>Smysl je jednoduchý: držet téma v běžném provozu, ne jen o něm mluvit.</p>
+        </section>
+
+        <section class="panel" id="panel4" role="tabpanel">
+          <h3>Hlavní aktivity pro manažera</h3>
+          <p>Klikni na aktivitu. Dole se zobrazí jen její detail krok za krokem, a zároveň si ji můžeš stáhnout jako samostatný soubor.</p>
+
+          <div class="activity-switcher" role="tablist" aria-label="Přepínač aktivit">
+            <button class="activity-tile active" data-activity="a1">
+              <div class="activity-tile-title">1. Drill nad insighty</div>
+              <div class="activity-tile-meta">Práce nad konkrétními klienty z insightů.</div>
+            </button>
+
+            <button class="activity-tile" data-activity="a2">
+              <div class="activity-tile-title">2. Telefon → schůzka</div>
+              <div class="activity-tile-meta">Otevření tématu po telefonu a navázání do schůzky.</div>
+            </button>
+
+            <button class="activity-tile" data-activity="a3">
+              <div class="activity-tile-title">3. Krátká příprava na schůzku</div>
+              <div class="activity-tile-meta">Rychlá 3minutová příprava bez přetížení.</div>
+            </button>
+
+            <button class="activity-tile" data-activity="a4">
+              <div class="activity-tile-title">4. Otázky místo produktů</div>
+              <div class="activity-tile-meta">Otevřené otázky místo skoku do nabídky.</div>
+            </button>
+
+            <button class="activity-tile" data-activity="a5">
+              <div class="activity-tile-title">5. Rozbor reálné situace</div>
+              <div class="activity-tile-meta">Učení se z telefonu nebo schůzky z praxe.</div>
+            </button>
+
+            <button class="activity-tile" data-activity="a6">
+              <div class="activity-tile-title">6. Sdílení dobré praxe</div>
+              <div class="activity-tile-meta">Co fungovalo a co si tým může převzít.</div>
+            </button>
+          </div>
+
+          <div class="activity-detail-view">
+            <section class="activity-detail-panel active" id="a1">
+              <span class="tag">Drill nad insighty</span>
+              <h4>Cíl</h4>
+              <p>Naučit tým pracovat nad konkrétními klienty, ne obecně nad tématem.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vytáhne 3 až 5 konkrétních klientů z insightů.</li>
+                    <li>Vybere bankéře, kteří s nimi mají pracovat.</li>
+                    <li>Nechá každého stručně říct:
+                      <ul>
+                        <li>co o klientovi ví,</li>
+                        <li>proč je to příležitost,</li>
+                        <li>co ještě potřebuje zjistit,</li>
+                        <li>jakou otevřenou otázkou začne.</li>
+                      </ul>
+                    </li>
+                    <li>Na konci s každým domluví další konkrétní krok.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Co ten insight o klientovi říká?</li>
+                    <li>Proč je to pro tebe příležitost?</li>
+                    <li>Co o klientovi už víš?</li>
+                    <li>Co ještě potřebuješ zjistit?</li>
+                    <li>Jak se ho na to zeptáš otevřeně?</li>
+                    <li>Jaký má být další krok po telefonátu nebo schůzce?</li>
+                  </ul>
+                  <div class="quote">„Nezajímá mě obecně, jestli se umíš ptát na úvěry. Zajímá mě, jak otevřeš téma právě u tohoto klienta, kterého ti ukazuje insight.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_1_drill_nad_insighty.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+
+            <section class="activity-detail-panel" id="a2">
+              <span class="tag">Telefon → schůzka</span>
+              <h4>Cíl</h4>
+              <p>Dostat bankéře k tomu, aby uměl téma úvěru otevřít po telefonu a přenést ho do schůzky.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vezme jednoho klienta z insightu.</li>
+                    <li>Nechá bankéře připravit si krátké oslovení.</li>
+                    <li>Požádá ho, aby nahlas řekl první dvě věty hovoru.</li>
+                    <li>Společně upraví formulaci tak, aby zněla přirozeně a otevřeně.</li>
+                    <li>Domluví, co je cílem hovoru a jak má bankéř klienta dostat do dalšího kroku.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Jak klientovi vysvětlíš, proč mu voláš?</li>
+                    <li>Jakou otevřenou otázkou rozhovor otevřeš?</li>
+                    <li>Co chceš v hovoru zjistit?</li>
+                    <li>Jak poznáš, že má smysl jít do schůzky?</li>
+                    <li>Jak klientovi nabídneš další krok?</li>
+                  </ul>
+                  <div class="quote">„Zkus mi teď říct první dvě věty, kterými tomu klientovi zavoláš.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_2_telefon_schuzka.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+
+            <section class="activity-detail-panel" id="a3">
+              <span class="tag">Krátká příprava na schůzku</span>
+              <h4>Cíl</h4>
+              <p>Udržet přípravu jednoduchou a použitelnou, ne těžkopádnou.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vybere 2 až 3 klienty z insightů, které budou bankéři řešit.</li>
+                    <li>Dá bankéřům 3 minuty na přípravu.</li>
+                    <li>Řekne jim, že si mají ujasnit pouze tři věci: co o klientovi už vím, co ještě nevím a na co se ho chci zeptat.</li>
+                    <li>Pak nechá jednoho bankéře přípravu krátce odprezentovat.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Co je pro tebe na tom klientovi hlavní?</li>
+                    <li>Co potřebuješ pochopit, abys věděl, co opravdu řeší?</li>
+                    <li>Jak se na to zeptáš přirozeně?</li>
+                    <li>Co bys na schůzce neměl minout?</li>
+                  </ul>
+                  <div class="quote">„Příprava nemá být složitá. Stačí tři minuty, během kterých si ujasníš, co víš, co nevíš a na co se zeptáš.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_3_kratka_priprava_na_schuzku.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+
+            <section class="activity-detail-panel" id="a4">
+              <span class="tag">Otázky místo produktů</span>
+              <h4>Cíl</h4>
+              <p>Naučit bankéře objevovat potřebu klienta přes otevřené otázky, ne skokem do nabídky.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vezme jednu typickou situaci z praxe.</li>
+                    <li>Nechá bankéře napsat 3 až 5 otázek, které by klientovi položili.</li>
+                    <li>Společně z nich vybere ty, které jsou opravdu otevřené a rozhovor rozvíjejí.</li>
+                    <li>Společně doplní, jak na odpověď klienta navázat.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Která otázka klienta otevře a která ho zavře?</li>
+                    <li>Která otázka ti pomůže zjistit jeho plány, obavy nebo priority?</li>
+                    <li>Jak budeš reagovat, když klient odpoví obecně?</li>
+                    <li>Jak ho dostaneš do konkrétní situace?</li>
+                  </ul>
+                  <div class="quote">„Nechci, abys skákal rovnou do produktu. Nejdřív potřebuji, abys pochopil, co klient opravdu řeší.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_4_otazky_misto_produktu.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+
+            <section class="activity-detail-panel" id="a5">
+              <span class="tag">Rozbor reálné situace</span>
+              <h4>Cíl</h4>
+              <p>Učit se z reálné praxe, ne z teorie.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vybere jeden čerstvý telefonát nebo jednu schůzku.</li>
+                    <li>Nechá bankéře stručně popsat, co se stalo.</li>
+                    <li>Pak s týmem rozebere, jak bylo téma otevřené, co bankéř zjistil, kde se mohl doptat víc a kde byla další obchodní příležitost.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Co v tom rozhovoru fungovalo?</li>
+                    <li>Kde jsme se spokojili moc brzo s první odpovědí?</li>
+                    <li>Jaká otevřená otázka tam ještě mohla zaznít?</li>
+                    <li>Co dalšího tady mohlo klientovi dávat smysl?</li>
+                  </ul>
+                  <div class="quote">„Nedíváme se na to proto, abychom někoho shodili. Díváme se na to proto, abychom se z toho všichni něco naučili.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_5_rozbor_realne_situace.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+
+            <section class="activity-detail-panel" id="a6">
+              <span class="tag">Sdílení dobré praxe</span>
+              <h4>Cíl</h4>
+              <p>Ukazovat týmu, že to jde, a posilovat jistotu přes konkrétní úspěšné příklady.</p>
+
+              <div class="detail-grid">
+                <div class="detail-block">
+                  <h4>Co manažer udělá</h4>
+                  <ol>
+                    <li>Vyzve 1 až 2 lidi, aby popsali, co se jim povedlo.</li>
+                    <li>Nechce obecné „povedlo se“, ale konkrétně: jakého klienta řešili, co otevřeli, jakou větu nebo otázku použili a proč to podle nich zafungovalo.</li>
+                    <li>Společně z toho vytáhne použitelnou větu nebo princip pro ostatní.</li>
+                  </ol>
+                </div>
+
+                <div class="detail-block">
+                  <h4>Na co se manažer doptává</h4>
+                  <ul>
+                    <li>Co přesně jsi klientovi řekl?</li>
+                    <li>Na co jsi se zeptal?</li>
+                    <li>Jak klient reagoval?</li>
+                    <li>Co z toho si může vzít i zbytek týmu?</li>
+                  </ul>
+                  <div class="quote">„Nechci slyšet jen, že se to povedlo. Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo.“</div>
+                </div>
+              </div>
+
+              <div class="activity-actions">
+                <button class="btn" data-download="aktivita_6_sdileni_dobre_praxe.txt">Stáhnout aktivitu</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="tip">Tlačítko „Stáhnout aktivitu“ vytvoří soubor přímo z této stránky. Nemusíš do GitHubu nahrávat žádné další přílohy.</div>
+        </section>
+
+        <section class="panel" id="panel5" role="tabpanel">
+          <h3>Jak má vypadat 1:1</h3>
+          <ol>
+            <li>Otevři konkrétní klienty z insightů.</li>
+            <li>Rozebírej, co bankéř otevřel a zjistil.</li>
+            <li>Napoj to na schůzku a obchod.</li>
+            <li>Domluv další konkrétní krok.</li>
+          </ol>
+          <div class="quote">„Nechci slyšet jen, že jsi klienta oslovil. Chci slyšet, co jsi otevřel, co jsi zjistil a co jsi tím posunul.“</div>
+        </section>
+
+        <section class="panel" id="panel6" role="tabpanel">
+          <h3>Co má manažer dělat s bankéřem, který to neposouvá</h3>
+          <ol>
+            <li>Vezmi konkrétního klienta z insightu.</li>
+            <li>Nech bankéře popsat, kde se zasekl.</li>
+            <li>Rozbij to na první malý krok.</li>
+            <li>Dej termín a kontrolu.</li>
+          </ol>
+          <p><strong>Otázky pro manažera:</strong> Co ti brání s tím klientem pracovat? Co uděláš jako první krok? Kdy to uděláš? Jak poznáme posun?</p>
+        </section>
+
+        <section class="panel" id="panel7" role="tabpanel">
+          <h3>Pracovní listy</h3>
+          <p class="small">Pracovní listy jsou taky součástí této stránky. Stáhnou se rovnou z kódu, bez dalších souborů.</p>
+          <div class="downloads">
+            <div class="download-card">
+              <h4>Práce s insightem</h4>
+              <p>List pro práci nad konkrétním klientem.</p>
+              <button class="btn" data-download="pracovni_list_1_prace_s_insightem.txt">Stáhnout list</button>
+            </div>
+            <div class="download-card">
+              <h4>1:1 nad klientem</h4>
+              <p>List pro individuální práci s bankéřem.</p>
+              <button class="btn" data-download="pracovni_list_2_1na1_nad_klientem.txt">Stáhnout list</button>
+            </div>
+            <div class="download-card">
+              <h4>Práce s bankéřem</h4>
+              <p>List pro vedení člověka nad jedním klientem a jedním krokem.</p>
+              <button class="btn" data-download="pracovni_list_3_prace_s_bankerem.txt">Stáhnout list</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.roadmap-step');
+    const panels = document.querySelectorAll('.panel');
+
+    steps.forEach(step => {
+      step.addEventListener('click', () => {
+        const target = step.getAttribute('data-target');
+
+        steps.forEach(s => {
+          s.classList.remove('active');
+          s.setAttribute('aria-selected', 'false');
+        });
+
+        panels.forEach(p => p.classList.remove('active'));
+
+        step.classList.add('active');
+        step.setAttribute('aria-selected', 'true');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    const activityTiles = document.querySelectorAll('.activity-tile');
+    const activityPanels = document.querySelectorAll('.activity-detail-panel');
+
+    activityTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const target = tile.getAttribute('data-activity');
+
+        activityTiles.forEach(t => t.classList.remove('active'));
+        activityPanels.forEach(p => p.classList.remove('active'));
+
+        tile.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    const files = {
+      "aktivita_1_drill_nad_insighty.txt": `AKTIVITA 1: DRILL NAD INSIGHTY
+================================
+
+Cíl:
+Naučit tým pracovat nad konkrétními klienty, ne obecně nad tématem.
+
+Co manažer udělá:
+1. Vytáhne 3 až 5 konkrétních klientů z insightů.
+2. Vybere bankéře, kteří s nimi mají pracovat.
+3. Nechá každého stručně říct:
+   - co o klientovi ví,
+   - proč je to příležitost,
+   - co ještě potřebuje zjistit,
+   - jakou otevřenou otázkou začne.
+4. Na konci s každým domluví další konkrétní krok.
+
+Na co se manažer doptává:
+- Co ten insight o klientovi říká?
+- Proč je to pro tebe příležitost?
+- Co o klientovi už víš?
+- Co ještě potřebuješ zjistit?
+- Jak se ho na to zeptáš otevřeně?
+- Jaký má být další krok po telefonátu nebo schůzce?
+
+Přímá řeč:
+„Nezajímá mě obecně, jestli se umíš ptát na úvěry. Zajímá mě, jak otevřeš téma právě u tohoto klienta, kterého ti ukazuje insight.“
+
+Výstup:
+Každý bankéř odchází s konkrétním klientem, konkrétní otázkou a konkrétním dalším krokem.
+`,
+      "aktivita_2_telefon_schuzka.txt": `AKTIVITA 2: TELEFON → SCHŮZKA
+==============================
+
+Cíl:
+Dostat bankéře k tomu, aby uměl téma úvěru otevřít po telefonu a přenést ho do schůzky.
+
+Co manažer udělá:
+1. Vezme jednoho klienta z insightu.
+2. Nechá bankéře připravit si krátké oslovení.
+3. Požádá ho, aby nahlas řekl první dvě věty hovoru.
+4. Společně upraví formulaci tak, aby zněla přirozeně a otevřeně.
+5. Domluví, co je cílem hovoru a jak má bankéř klienta dostat do dalšího kroku.
+
+Na co se manažer doptává:
+- Jak klientovi vysvětlíš, proč mu voláš?
+- Jakou otevřenou otázkou rozhovor otevřeš?
+- Co chceš v hovoru zjistit?
+- Jak poznáš, že má smysl jít do schůzky?
+- Jak klientovi nabídneš další krok?
+
+Přímá řeč:
+„Zkus mi teď říct první dvě věty, kterými tomu klientovi zavoláš.“
+
+Výstup:
+Bankéř má připravený konkrétní začátek hovoru, ví, co chce zjistit, a ví, kam má hovor vést.
+`,
+      "aktivita_3_kratka_priprava_na_schuzku.txt": `AKTIVITA 3: KRÁTKÁ PŘÍPRAVA NA SCHŮZKU
+=======================================
+
+Cíl:
+Udržet přípravu jednoduchou a použitelnou, ne těžkopádnou.
+
+Co manažer udělá:
+1. Vybere 2 až 3 klienty z insightů, které budou bankéři řešit.
+2. Dá bankéřům 3 minuty na přípravu.
+3. Řekne jim, že si mají ujasnit pouze tři věci:
+   - co o klientovi už vím,
+   - co ještě nevím,
+   - na co se ho chci zeptat.
+4. Pak nechá jednoho bankéře přípravu krátce odprezentovat.
+
+Na co se manažer doptává:
+- Co je pro tebe na tom klientovi hlavní?
+- Co potřebuješ pochopit, abys věděl, co opravdu řeší?
+- Jak se na to zeptáš přirozeně?
+- Co bys na schůzce neměl minout?
+
+Přímá řeč:
+„Příprava nemá být složitá. Stačí tři minuty, během kterých si ujasníš, co víš, co nevíš a na co se zeptáš.“
+
+Výstup:
+Bankéř nejde na schůzku naslepo a má připravené 1 až 2 silné otevřené otázky.
+`,
+      "aktivita_4_otazky_misto_produktu.txt": `AKTIVITA 4: OTÁZKY MÍSTO PRODUKTŮ
+==================================
+
+Cíl:
+Naučit bankéře objevovat potřebu klienta přes otevřené otázky, ne skokem do nabídky.
+
+Co manažer udělá:
+1. Vezme jednu typickou situaci z praxe.
+2. Nechá bankéře napsat 3 až 5 otázek, které by klientovi položili.
+3. Společně z nich vybere ty, které jsou opravdu otevřené a rozhovor rozvíjejí.
+4. Společně doplní, jak na odpověď klienta navázat.
+
+Na co se manažer doptává:
+- Která otázka klienta otevře a která ho zavře?
+- Která otázka ti pomůže zjistit jeho plány, obavy nebo priority?
+- Jak budeš reagovat, když klient odpoví obecně?
+- Jak ho dostaneš do konkrétní situace?
+
+Přímá řeč:
+„Nechci, abys skákal rovnou do produktu. Nejdřív potřebuji, abys pochopil, co klient opravdu řeší.“
+
+Výstup:
+Tým si odnese konkrétní otevřené otázky, které může hned používat v praxi.
+`,
+      "aktivita_5_rozbor_realne_situace.txt": `AKTIVITA 5: ROZBOR REÁLNÉ SITUACE
+==================================
+
+Cíl:
+Učit se z reálné praxe, ne z teorie.
+
+Co manažer udělá:
+1. Vybere jeden čerstvý telefonát nebo jednu schůzku.
+2. Nechá bankéře stručně popsat, co se stalo.
+3. Pak s týmem rozebere:
+   - jak bylo téma otevřené,
+   - co bankéř zjistil,
+   - kde se mohl doptat víc,
+   - kde byla další obchodní příležitost.
+
+Na co se manažer doptává:
+- Co v tom rozhovoru fungovalo?
+- Kde jsme se spokojili moc brzo s první odpovědí?
+- Jaká otevřená otázka tam ještě mohla zaznít?
+- Co dalšího tady mohlo klientovi dávat smysl?
+
+Přímá řeč:
+„Nedíváme se na to proto, abychom někoho shodili. Díváme se na to proto, abychom se z toho všichni něco naučili.“
+
+Výstup:
+Tým si odnáší 2 až 3 konkrétní poučení do dalšího týdne.
+`,
+      "aktivita_6_sdileni_dobre_praxe.txt": `AKTIVITA 6: SDÍLENÍ DOBRÉ PRAXE
+================================
+
+Cíl:
+Ukazovat týmu, že to jde, a posilovat jistotu přes konkrétní úspěšné příklady.
+
+Co manažer udělá:
+1. Vyzve 1 až 2 lidi, aby popsali, co se jim povedlo.
+2. Nechce obecné „povedlo se“, ale konkrétně:
+   - jakého klienta řešili,
+   - co otevřeli,
+   - jakou větu nebo otázku použili,
+   - proč to podle nich zafungovalo.
+3. Společně z toho vytáhne použitelnou větu nebo princip pro ostatní.
+
+Na co se manažer doptává:
+- Co přesně jsi klientovi řekl?
+- Na co jsi se zeptal?
+- Jak klient reagoval?
+- Co z toho si může vzít i zbytek týmu?
+
+Přímá řeč:
+„Nechci slyšet jen, že se to povedlo. Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo.“
+
+Výstup:
+Tým si odnese jednu konkrétní větu, otázku nebo princip, který může zkusit příští týden.
+`,
+      "pracovni_list_1_prace_s_insightem.txt": `PRACOVNÍ LIST 1: PRÁCE S INSIGHTEM
+===================================
+
+Jméno klienta:
+
+Jaký insight u klienta vidím:
+
+Proč je to příležitost:
+
+Co o klientovi už víme:
+
+Co ještě potřebujeme zjistit:
+
+Jakou otevřenou otázkou začneme:
+
+Jaký je další krok:
+
+Kdy ověřím výsledek:
+`,
+      "pracovni_list_2_1na1_nad_klientem.txt": `PRACOVNÍ LIST 2: 1:1 NAD KONKRÉTNÍM KLIENTEM
+==============================================
+
+Jakého klienta dnes řešíme:
+
+Co o něm bankéř ví:
+
+Co o něm ještě neví:
+
+Jak se ho zeptá:
+
+Co chce zjistit:
+
+Jaký má být další krok:
+
+Co má bankéř udělat do příště:
+
+Jak to ověřím:
+`,
+      "pracovni_list_3_prace_s_bankerem.txt": `PRACOVNÍ LIST 3: PRÁCE S BANKÉŘEM
+==================================
+
+Jméno bankéře:
+
+Jakého klienta z insightu bereme:
+
+Kde se bankéř zasekl:
+
+Jaký bude první konkrétní krok:
+
+Do kdy to má udělat:
+
+Jak se k tomu vrátíme:
+
+Co budu kontrolovat:
+`
+    };
+
+    const steps = document.querySelectorAll('.roadmap-step');
+    const panels = document.querySelectorAll('.panel');
+
+    steps.forEach(step => {
+      step.addEventListener('click', () => {
+        const target = step.getAttribute('data-target');
+
+        steps.forEach(s => {
+          s.classList.remove('active');
+          s.setAttribute('aria-selected', 'false');
+        });
+
+        panels.forEach(p => p.classList.remove('active'));
+
+        step.classList.add('active');
+        step.setAttribute('aria-selected', 'true');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    const activityTiles = document.querySelectorAll('.activity-tile');
+    const activityPanels = document.querySelectorAll('.activity-detail-panel');
+
+    activityTiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const target = tile.getAttribute('data-activity');
+
+        activityTiles.forEach(t => t.classList.remove('active'));
+        activityPanels.forEach(p => p.classList.remove('active'));
+
+        tile.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-download]');
+      if (!btn) return;
+
+      const filename = btn.getAttribute('data-download');
+      const content = files[filename];
+      if (!content) return;
+
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
+</body>
+</html>
