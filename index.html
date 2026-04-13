@@ -3,308 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Úvěry – Roadmapa pro manažera | ČS Vzdělávací Dashboard</title>
+  <title>Úvěry – Manuál manažera | ČS</title>
   <style>
     /* ============================================
-       DESIGN TOKENS & CSS VARIABLES
+       DESIGN TOKENS - BRAND COLORS
        ============================================ */
     :root {
-      /* Brand Colors */
-      --primary-dark: #004B96;
-      --primary-light: #2087ED;
-      --accent-teal: #02A3A4;
-      --accent-orange: #FF6613;
-      --accent-success: #0CB43F;
+      --color-1: #2087ED;
+      --color-2: #02A3A4;
+      --color-3: #FF6613;
+      --color-4: #004B96;
+      --color-5: #0CB43F;
+      --color-6: #721C7A;
+      --color-7: #245375;
       
-      /* Neutrals */
-      --bg-main: #F4F6F9;
-      --bg-card: #FFFFFF;
-      --bg-subtle: #F9FAFB;
-      --text-primary: #1F2937;
-      --text-secondary: #6B7280;
-      --text-muted: #9CA3AF;
-      --border-light: #E5E7EB;
-      --border-medium: #D1D5DB;
+      --bg-light: #F7F9FC;
+      --bg-white: #FFFFFF;
+      --text-dark: #2C3E50;
+      --text-gray: #7F8C8D;
+      --border: #E0E6ED;
       
-      /* Shadows (soft, corporate style) */
-      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
       
-      /* Typography */
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Courier, monospace;
-      
-      /* Spacing & Radius */
-      --radius-sm: 6px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --radius-xl: 16px;
-      --spacing-xs: 4px;
-      --spacing-sm: 8px;
-      --spacing-md: 12px;
-      --spacing-lg: 16px;
-      --spacing-xl: 24px;
-      --spacing-2xl: 32px;
-      
-      /* Transitions */
-      --transition-fast: 150ms ease-in-out;
-      --transition-base: 200ms ease-in-out;
-      --transition-slow: 300ms ease-in-out;
+      --radius: 12px;
     }
 
-    /* ============================================
-       RESET & GLOBAL STYLES
-       ============================================ */
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
     body {
       margin: 0;
-      font-family: var(--font-family);
-      color: var(--text-primary);
-      background-color: var(--bg-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text-dark);
+      background: var(--bg-light);
       line-height: 1.6;
-      letter-spacing: -0.3px;
     }
 
     /* ============================================
-       MAIN LAYOUT - CSS GRID WITH STICKY SIDEBAR
+       LAYOUT - SIDEBAR + CONTENT
        ============================================ */
-    .app-container {
+    .container {
       display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
+      grid-template-columns: 260px 1fr;
       min-height: 100vh;
-    }
-
-    .main-wrapper {
-      display: grid;
-      grid-template-columns: 280px 1fr;
       gap: 0;
     }
 
-    /* Sticky Sidebar Navigation */
-    .sidebar-nav {
+    /* SIDEBAR */
+    .sidebar {
+      background: var(--bg-white);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
       position: sticky;
       top: 0;
       height: 100vh;
-      background-color: var(--bg-card);
-      border-right: 1px solid var(--border-light);
-      padding: var(--spacing-lg);
       overflow-y: auto;
-      z-index: 100;
-      box-shadow: var(--shadow-xs);
+      box-shadow: var(--shadow-sm);
     }
 
-    .sidebar-nav::-webkit-scrollbar {
-      width: 6px;
+    .sidebar::-webkit-scrollbar {
+      width: 5px;
     }
 
-    .sidebar-nav::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .sidebar-nav::-webkit-scrollbar-thumb {
-      background: var(--border-medium);
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #D0D8E0;
       border-radius: 3px;
     }
 
-    .sidebar-nav::-webkit-scrollbar-thumb:hover {
-      background: var(--text-muted);
-    }
-
-    .sidebar-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin: 0 0 var(--spacing-md) 0;
-      padding: 0 0 var(--spacing-sm) 0;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .roadmap-nav-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .roadmap-nav-item {
-      margin: 0 0 var(--spacing-sm) 0;
-    }
-
-    .roadmap-nav-link {
+    .nav-item {
+      padding: 14px 20px;
+      margin: 0 10px;
+      border-radius: 8px;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font: inherit;
+      text-align: left;
+      color: var(--text-gray);
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
       display: flex;
       align-items: center;
-      padding: var(--spacing-md) var(--spacing-lg);
-      border-radius: var(--radius-lg);
-      background: transparent;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      transition: all var(--transition-base);
-      text-align: left;
-      border-left: 3px solid transparent;
-      margin-left: calc(var(--spacing-lg) * -1);
-      padding-left: calc(var(--spacing-lg) - 3px);
+      gap: 10px;
     }
 
-    .roadmap-nav-link:hover {
-      background-color: var(--bg-subtle);
-      color: var(--primary-dark);
-    }
-
-    .roadmap-nav-link:focus-visible {
-      outline: 2px solid var(--primary-light);
-      outline-offset: 2px;
-    }
-
-    .roadmap-nav-link.active {
-      background-color: rgba(0, 75, 150, 0.08);
-      color: var(--primary-dark);
-      font-weight: 600;
-      border-left-color: var(--primary-light);
-    }
-
-    .roadmap-nav-dot {
-      width: 8px;
-      height: 8px;
+    .nav-dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      margin-right: var(--spacing-md);
       flex-shrink: 0;
-      transition: transform var(--transition-base);
+      transition: transform 0.2s;
     }
 
-    .roadmap-nav-link.active .roadmap-nav-dot {
-      transform: scale(1.3);
+    /* Color-coded navigation dots */
+    .nav-item[data-step="1"] .nav-dot { background: var(--color-1); }
+    .nav-item[data-step="2"] .nav-dot { background: var(--color-2); }
+    .nav-item[data-step="3"] .nav-dot { background: var(--color-3); }
+    .nav-item[data-step="4"] .nav-dot { background: var(--color-1); }
+    .nav-item[data-step="5"] .nav-dot { background: var(--color-2); }
+    .nav-item[data-step="6"] .nav-dot { background: var(--color-3); }
+    .nav-item[data-step="7"] .nav-dot { background: var(--color-1); }
+
+    .nav-item:hover {
+      background: rgba(32, 135, 237, 0.06);
+      color: var(--text-dark);
     }
 
-    .roadmap-nav-link[data-color="blue"] .roadmap-nav-dot {
-      background-color: var(--primary-light);
+    .nav-item.active {
+      background: rgba(32, 135, 237, 0.1);
+      color: var(--text-dark);
+      font-weight: 700;
+      border-left-color: var(--color-1);
     }
 
-    .roadmap-nav-link[data-color="teal"] .roadmap-nav-dot {
-      background-color: var(--accent-teal);
+    .nav-item.active .nav-dot {
+      transform: scale(1.4);
     }
 
-    .roadmap-nav-link[data-color="orange"] .roadmap-nav-dot {
-      background-color: var(--accent-orange);
-    }
-
-    /* ============================================
-       CONTENT AREA
-       ============================================ */
-    .content-area {
+    /* MAIN CONTENT */
+    .main {
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    .content-header {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, #003a6b 100%);
-      color: var(--bg-card);
-      padding: var(--spacing-2xl) var(--spacing-xl);
-      box-shadow: var(--shadow-md);
+    .header {
+      background: linear-gradient(135deg, #004B96 0%, #003366 100%);
+      color: white;
+      padding: 40px;
+      text-align: left;
     }
 
-    .content-header h1 {
-      margin: 0 0 var(--spacing-sm) 0;
-      font-size: 1.75rem;
+    .header h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
       font-weight: 700;
-      letter-spacing: -0.5px;
     }
 
-    .content-header p {
+    .header p {
       margin: 0;
-      font-size: 0.95rem;
-      opacity: 0.95;
-      max-width: 800px;
+      font-size: 15px;
+      opacity: 0.9;
       line-height: 1.5;
+      max-width: 700px;
     }
 
-    .content-scroll {
+    .content {
       flex: 1;
       overflow-y: auto;
-      padding: var(--spacing-xl);
+      padding: 40px;
     }
 
-    .content-scroll::-webkit-scrollbar {
-      width: 8px;
+    .content::-webkit-scrollbar {
+      width: 6px;
     }
 
-    .content-scroll::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .content-scroll::-webkit-scrollbar-thumb {
-      background: var(--border-medium);
-      border-radius: 4px;
-    }
-
-    .content-scroll::-webkit-scrollbar-thumb:hover {
-      background: var(--text-muted);
+    .content::-webkit-scrollbar-thumb {
+      background: #D0D8E0;
+      border-radius: 3px;
     }
 
     /* ============================================
-       INTRO SECTION
-       ============================================ */
-    .intro-section {
-      background-color: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-xl);
-      margin-bottom: var(--spacing-xl);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .intro-section h2 {
-      margin: 0 0 var(--spacing-md) 0;
-      font-size: 1.25rem;
-      color: var(--primary-dark);
-    }
-
-    .intro-section p {
-      margin: 0 0 var(--spacing-lg) 0;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .intro-note {
-      background: linear-gradient(90deg, rgba(2, 163, 164, 0.06) 0%, rgba(32, 135, 237, 0.04) 100%);
-      border-left: 4px solid var(--accent-teal);
-      border-radius: var(--radius-md);
-      padding: var(--spacing-lg);
-      color: var(--text-primary);
-      font-weight: 500;
-      display: flex;
-      align-items: flex-start;
-      gap: var(--spacing-md);
-    }
-
-    .intro-note::before {
-      content: "ℹ";
-      font-size: 1.25rem;
-      color: var(--accent-teal);
-      flex-shrink: 0;
-      font-weight: bold;
-    }
-
-    /* ============================================
-       PANEL SYSTEM
+       PANELS & SECTIONS
        ============================================ */
     .panel {
       display: none;
-      animation: fadeIn var(--transition-base);
+      animation: fadeIn 0.3s;
     }
 
     .panel.active {
@@ -312,266 +180,234 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .panel h2 {
-      margin: 0 0 var(--spacing-lg) 0;
-      font-size: 1.5rem;
-      color: var(--primary-dark);
-      border-bottom: 2px solid var(--border-light);
-      padding-bottom: var(--spacing-md);
+      margin: 0 0 28px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-dark);
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--border);
     }
 
     .panel h3 {
-      margin: var(--spacing-xl) 0 var(--spacing-md) 0;
-      font-size: 1.1rem;
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    .panel h4 {
-      margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      font-weight: 600;
+      margin: 24px 0 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
     }
 
     .panel p {
-      margin: 0 0 var(--spacing-md) 0;
-      color: var(--text-secondary);
+      margin: 0 0 16px;
+      color: var(--text-gray);
       line-height: 1.7;
     }
 
-    .panel ul,
-    .panel ol {
-      margin: var(--spacing-md) 0 var(--spacing-lg) var(--spacing-xl);
-      color: var(--text-secondary);
+    .panel ul, .panel ol {
+      margin: 16px 0 20px 24px;
+      color: var(--text-gray);
       line-height: 1.8;
     }
 
     .panel li {
-      margin: var(--spacing-sm) 0;
+      margin: 8px 0;
     }
 
     /* ============================================
-       GRID LAYOUTS - MINI CARDS
+       CARDS GRID - COLORED BY STEP
        ============================================ */
-    .mini-grid {
+    .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--spacing-lg);
-      margin: var(--spacing-lg) 0;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 20px 0 32px;
     }
 
-    .mini-card {
-      background-color: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-      transition: all var(--transition-base);
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.2s;
+      border-top: 4px solid var(--border);
     }
 
-    .mini-card:hover {
-      box-shadow: var(--shadow-sm);
-      border-color: var(--primary-light);
-    }
+    .card.color-1 { border-top-color: var(--color-1); }
+    .card.color-2 { border-top-color: var(--color-2); }
+    .card.color-3 { border-top-color: var(--color-3); }
+    .card.color-4 { border-top-color: var(--color-4); }
+    .card.color-5 { border-top-color: var(--color-5); }
+    .card.color-6 { border-top-color: var(--color-6); }
+    .card.color-7 { border-top-color: var(--color-7); }
 
-    .mini-card h4 {
-      margin: 0 0 var(--spacing-md) 0;
-      color: var(--primary-dark);
-      font-size: 0.95rem;
-    }
-
-    .mini-card p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .mini-card ul {
-      margin: var(--spacing-md) 0 0 var(--spacing-lg);
-      padding: 0;
-      font-size: 0.9rem;
-    }
-
-    /* ============================================
-       CALLOUT BLOCKS (Quote & Tip)
-       ============================================ */
-    .callout {
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-      margin: var(--spacing-xl) 0;
-      display: flex;
-      gap: var(--spacing-lg);
-      align-items: flex-start;
-    }
-
-    .callout::before {
-      content: "";
-      width: 4px;
-      height: auto;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
-    .callout-quote {
-      background-color: rgba(32, 135, 237, 0.08);
-      border-left: 4px solid var(--primary-light);
-    }
-
-    .callout-quote::before {
-      background-color: var(--primary-light);
-    }
-
-    .callout-quote .callout-icon {
-      color: var(--primary-light);
-    }
-
-    .callout-tip {
-      background-color: rgba(255, 102, 19, 0.08);
-      border-left: 4px solid var(--accent-orange);
-    }
-
-    .callout-tip::before {
-      background-color: var(--accent-orange);
-    }
-
-    .callout-tip .callout-icon {
-      color: var(--accent-orange);
-    }
-
-    .callout-content {
-      flex: 1;
-      font-weight: 500;
-      color: var(--text-primary);
-      line-height: 1.7;
-    }
-
-    .callout-icon {
-      font-size: 1.25rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    /* ============================================
-       ACTIVITY TILES & DETAILS
-       ============================================ */
-    .activity-tiles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: var(--spacing-md);
-      margin: var(--spacing-lg) 0;
-    }
-
-    .activity-tile {
-      background-color: var(--bg-subtle);
-      border: 2px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-      cursor: pointer;
-      transition: all var(--transition-base);
-      text-align: left;
-      font: inherit;
-      color: var(--text-primary);
-    }
-
-    .activity-tile:hover {
-      border-color: var(--primary-light);
-      background-color: var(--bg-card);
-      box-shadow: var(--shadow-sm);
+    .card:hover {
+      box-shadow: var(--shadow);
       transform: translateY(-2px);
     }
 
-    .activity-tile:focus-visible {
-      outline: 2px solid var(--primary-light);
-      outline-offset: 2px;
-    }
-
-    .activity-tile.active {
-      border-color: var(--primary-light);
-      background: linear-gradient(135deg, rgba(32, 135, 237, 0.04) 0%, rgba(2, 163, 164, 0.02) 100%);
-      box-shadow: 0 0 0 2px rgba(0, 75, 150, 0.1);
-    }
-
-    .activity-tile-title {
+    .card h4 {
+      margin: 0 0 12px;
+      font-size: 15px;
       font-weight: 700;
-      margin-bottom: var(--spacing-sm);
-      font-size: 0.95rem;
-      color: var(--primary-dark);
+      color: var(--text-dark);
     }
 
-    .activity-tile-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+    .card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-gray);
     }
 
-    .activity-detail-view {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-xl);
-      margin-top: var(--spacing-xl);
-      box-shadow: var(--shadow-sm);
+    .card ul {
+      margin: 12px 0 0 20px;
+      padding: 0;
+      font-size: 14px;
     }
 
-    .activity-detail-panel {
+    /* ============================================
+       INFO BOX (Callout)
+       ============================================ */
+    .info-box {
+      background: rgba(32, 135, 237, 0.08);
+      border-left: 4px solid var(--color-1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.7;
+      display: flex;
+      gap: 14px;
+    }
+
+    .info-box.tip {
+      background: rgba(255, 102, 19, 0.08);
+      border-left-color: var(--color-3);
+    }
+
+    .info-box-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       ACTIVITY TILES - LARGE & COLORED
+       ============================================ */
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+
+    .activity-btn {
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .activity-btn.color-1 { border-color: var(--color-1); }
+    .activity-btn.color-2 { border-color: var(--color-2); }
+    .activity-btn.color-3 { border-color: var(--color-3); }
+    .activity-btn.color-4 { border-color: var(--color-4); }
+    .activity-btn.color-5 { border-color: var(--color-5); }
+    .activity-btn.color-6 { border-color: var(--color-6); }
+
+    .activity-btn:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .activity-btn.active {
+      font-weight: 700;
+      background: rgba(32, 135, 237, 0.05);
+    }
+
+    .activity-btn.active.color-1 { 
+      border-color: var(--color-1);
+      background: rgba(32, 135, 237, 0.08);
+    }
+
+    .activity-btn.active.color-2 { 
+      border-color: var(--color-2);
+      background: rgba(2, 163, 164, 0.08);
+    }
+
+    .activity-btn.active.color-3 { 
+      border-color: var(--color-3);
+      background: rgba(255, 102, 19, 0.08);
+    }
+
+    .activity-detail {
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 28px 0;
       display: none;
     }
 
-    .activity-detail-panel.active {
+    .activity-detail.active {
       display: block;
-      animation: fadeIn var(--transition-base);
+      animation: fadeIn 0.3s;
     }
 
     .activity-tag {
       display: inline-block;
-      background: linear-gradient(135deg, rgba(0, 75, 150, 0.08) 0%, rgba(2, 163, 164, 0.06) 100%);
-      color: var(--primary-dark);
-      padding: var(--spacing-sm) var(--spacing-lg);
-      border-radius: var(--radius-xl);
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
       letter-spacing: 0.3px;
-      margin-bottom: var(--spacing-lg);
-      border: 1px solid rgba(0, 75, 150, 0.1);
     }
 
-    .activity-detail-grid {
+    .activity-tag.color-1 { background: rgba(32, 135, 237, 0.1); color: var(--color-1); }
+    .activity-tag.color-2 { background: rgba(2, 163, 164, 0.1); color: var(--color-2); }
+    .activity-tag.color-3 { background: rgba(255, 102, 19, 0.1); color: var(--color-3); }
+    .activity-tag.color-4 { background: rgba(0, 75, 150, 0.1); color: var(--color-4); }
+    .activity-tag.color-5 { background: rgba(12, 180, 63, 0.1); color: var(--color-5); }
+    .activity-tag.color-6 { background: rgba(114, 28, 122, 0.1); color: var(--color-6); }
+
+    .activity-detail h3 {
+      margin-top: 0;
+    }
+
+    /* ============================================
+       GRID FOR DETAIL BLOCKS
+       ============================================ */
+    .detail-grid {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
-      gap: var(--spacing-lg);
-      margin: var(--spacing-lg) 0;
+      gap: 20px;
+      margin: 20px 0;
     }
 
-    .activity-detail-block {
-      background-color: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
+    .detail-block {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
     }
 
-    .activity-detail-block h4 {
-      margin-top: 0;
-      color: var(--primary-dark);
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: var(--spacing-md);
-    }
-
-    .activity-actions {
-      display: flex;
-      gap: var(--spacing-md);
-      flex-wrap: wrap;
-      margin-top: var(--spacing-lg);
+    .detail-block h4 {
+      margin: 0 0 14px;
+      color: var(--text-dark);
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
     }
 
     /* ============================================
@@ -580,236 +416,123 @@
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-md) var(--spacing-lg);
-      border-radius: var(--radius-lg);
-      background-color: var(--primary-light);
-      color: var(--bg-card);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: var(--color-1);
+      color: white;
       border: none;
       cursor: pointer;
-      transition: all var(--transition-base);
-      position: relative;
-      overflow: hidden;
+      font: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
     }
 
     .btn:hover {
-      background-color: var(--primary-dark);
-      box-shadow: var(--shadow-md);
+      background: var(--color-4);
       transform: translateY(-1px);
-    }
-
-    .btn:active {
-      transform: translateY(0);
+      box-shadow: var(--shadow);
     }
 
     .btn:focus-visible {
-      outline: 2px solid var(--primary-dark);
+      outline: 2px solid var(--color-1);
       outline-offset: 2px;
-    }
-
-    .btn.secondary {
-      background-color: var(--bg-subtle);
-      color: var(--primary-dark);
-      border: 1px solid var(--border-light);
-    }
-
-    .btn.secondary:hover {
-      background-color: var(--bg-card);
-      border-color: var(--primary-light);
     }
 
     .btn-icon {
       width: 16px;
       height: 16px;
-      display: inline-block;
-    }
-
-    /* Download Button SVG Icon */
-    .btn-download-icon {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
     }
 
     /* ============================================
-       DOWNLOADS SECTION
+       DOWNLOADS - CARD STYLE
        ============================================ */
     .downloads-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--spacing-lg);
-      margin: var(--spacing-lg) 0;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 24px 0;
     }
 
     .download-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-      transition: all var(--transition-base);
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--color-2);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.2s;
     }
 
+    .download-card:nth-child(2) { border-top-color: var(--color-3); }
+    .download-card:nth-child(3) { border-top-color: var(--color-1); }
+
     .download-card:hover {
-      box-shadow: var(--shadow-sm);
-      border-color: var(--primary-light);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
     }
 
     .download-card h4 {
-      margin: 0 0 var(--spacing-sm) 0;
-      color: var(--primary-dark);
-      font-size: 1rem;
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
     }
 
     .download-card p {
-      margin: 0 0 var(--spacing-lg) 0;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: var(--text-gray);
     }
 
     /* ============================================
-       DETAILS / ACCORDION STYLING
+       RESPONSIVE
        ============================================ */
-    details {
-      margin: var(--spacing-lg) 0;
-    }
-
-    details summary {
-      background-color: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-md) var(--spacing-lg);
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--text-primary);
-      transition: all var(--transition-base);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      user-select: none;
-    }
-
-    details summary:hover {
-      background-color: var(--bg-card);
-      border-color: var(--primary-light);
-    }
-
-    details summary:focus-visible {
-      outline: 2px solid var(--primary-light);
-      outline-offset: 2px;
-    }
-
-    details summary::after {
-      content: "";
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23004B96'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      transition: transform var(--transition-base);
-      margin-left: var(--spacing-lg);
-      flex-shrink: 0;
-    }
-
-    details[open] summary::after {
-      transform: rotate(180deg);
-    }
-
-    details > *:not(summary) {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-top: none;
-      border-bottom-left-radius: var(--radius-lg);
-      border-bottom-right-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-    }
-
-    /* ============================================
-       RESPONSIVE DESIGN
-       ============================================ */
-    @media (max-width: 1200px) {
-      .activity-detail-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     @media (max-width: 900px) {
-      .main-wrapper {
+      .container {
         grid-template-columns: 1fr;
       }
 
-      .sidebar-nav {
+      .sidebar {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
         height: auto;
         border-right: none;
-        border-top: 1px solid var(--border-light);
-        padding: var(--spacing-md) var(--spacing-lg);
-        overflow-y: visible;
-        overflow-x: auto;
-        z-index: 200;
-        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
-      }
-
-      .sidebar-nav::-webkit-scrollbar {
-        height: 4px;
-      }
-
-      .sidebar-title {
-        display: none;
-      }
-
-      .roadmap-nav-list {
+        border-top: 1px solid var(--border);
+        overflow: auto;
+        max-height: 120px;
         display: flex;
-        gap: var(--spacing-sm);
         overflow-x: auto;
-        padding-bottom: var(--spacing-sm);
+        padding: 10px 0;
       }
 
-      .roadmap-nav-item {
+      .nav-item {
         margin: 0;
-        flex-shrink: 0;
-      }
-
-      .roadmap-nav-link {
-        padding: var(--spacing-sm) var(--spacing-lg);
+        padding: 10px 16px;
         white-space: nowrap;
         border-left: none;
         border-bottom: 3px solid transparent;
-        margin-left: 0;
         border-radius: 0;
       }
 
-      .roadmap-nav-link:hover {
-        background-color: transparent;
-        border-bottom-color: var(--primary-light);
+      .nav-item.active {
+        border-bottom-color: var(--color-1);
+        border-left: none;
       }
 
-      .roadmap-nav-link.active {
-        background-color: transparent;
-        border-bottom-color: var(--primary-light);
+      .nav-dot { display: none; }
+
+      .main {
+        padding-bottom: 140px;
       }
 
-      .roadmap-nav-dot {
-        display: none;
+      .content {
+        padding: 24px;
       }
 
-      .content-area {
-        padding-bottom: 180px;
-      }
-
-      .content-scroll {
-        padding: var(--spacing-lg);
-      }
-
-      .activity-detail-grid {
+      .detail-grid {
         grid-template-columns: 1fr;
       }
 
@@ -818,38 +541,29 @@
       }
     }
 
-    @media (max-width: 640px) {
-      :root {
-        --spacing-xl: 16px;
-        --spacing-2xl: 20px;
+    @media (max-width: 600px) {
+      .header {
+        padding: 24px;
       }
 
-      .content-header {
-        padding: var(--spacing-lg);
+      .header h1 {
+        font-size: 22px;
       }
 
-      .content-header h1 {
-        font-size: 1.5rem;
+      .header p {
+        font-size: 14px;
       }
 
-      .content-header p {
-        font-size: 0.9rem;
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity-grid {
+        grid-template-columns: 1fr;
       }
 
       .panel h2 {
-        font-size: 1.25rem;
-      }
-
-      .mini-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .activity-tiles {
-        grid-template-columns: 1fr;
-      }
-
-      .activity-actions {
-        flex-direction: column;
+        font-size: 20px;
       }
 
       .btn {
@@ -860,924 +574,755 @@
   </style>
 </head>
 <body>
-  <div class="app-container">
-    <!-- HEADER -->
-    <div class="content-header">
-      <h1>Úvěry – Roadmapa pro manažera</h1>
-      <p>Interaktivní průvodce pro manažery. Vyberte krok v navigaci vlevo a postupujte systematicky. Všechny aktivity a pracovní listy si můžete stáhnout přímo z této stránky.</p>
-    </div>
+  <div class="container">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <button class="nav-item active" data-step="1" data-panel="panel-1">
+        <span class="nav-dot"></span>
+        <span>1) Na co cílíme</span>
+      </button>
+      <button class="nav-item" data-step="2" data-panel="panel-2">
+        <span class="nav-dot"></span>
+        <span>2) Insighty</span>
+      </button>
+      <button class="nav-item" data-step="3" data-panel="panel-3">
+        <span class="nav-dot"></span>
+        <span>3) Týdenní rytmus</span>
+      </button>
+      <button class="nav-item" data-step="4" data-panel="panel-4">
+        <span class="nav-dot"></span>
+        <span>4) Aktivity</span>
+      </button>
+      <button class="nav-item" data-step="5" data-panel="panel-5">
+        <span class="nav-dot"></span>
+        <span>5) 1:1</span>
+      </button>
+      <button class="nav-item" data-step="6" data-panel="panel-6">
+        <span class="nav-dot"></span>
+        <span>6) Co s bankéřem</span>
+      </button>
+      <button class="nav-item" data-step="7" data-panel="panel-7">
+        <span class="nav-dot"></span>
+        <span>7) Pracovní listy</span>
+      </button>
+    </aside>
 
-    <!-- MAIN CONTENT WRAPPER -->
-    <div class="main-wrapper">
-      <!-- STICKY SIDEBAR NAVIGATION -->
-      <aside class="sidebar-nav">
-        <div class="sidebar-title">Roadmapa</div>
-        <nav>
-          <ul class="roadmap-nav-list">
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link active" data-panel="panel-1" data-color="blue">
-                <span class="roadmap-nav-dot"></span>
-                1) Na co cílíme
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-2" data-color="teal">
-                <span class="roadmap-nav-dot"></span>
-                2) Insighty
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-3" data-color="orange">
-                <span class="roadmap-nav-dot"></span>
-                3) Týdenní rytmus
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-4" data-color="blue">
-                <span class="roadmap-nav-dot"></span>
-                4) Aktivity
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-5" data-color="teal">
-                <span class="roadmap-nav-dot"></span>
-                5) 1:1
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-6" data-color="orange">
-                <span class="roadmap-nav-dot"></span>
-                6) Co dělat s bankéřem
-              </button>
-            </li>
-            <li class="roadmap-nav-item">
-              <button class="roadmap-nav-link" data-panel="panel-7" data-color="blue">
-                <span class="roadmap-nav-dot"></span>
-                7) Pracovní listy
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <div class="header">
+        <h1>Úvěry – Roadmapa pro manažera</h1>
+        <p>Jednoduchý průvodce s konkrétními akčními kroky. Vyberte téma vlevo a postupujte systematicky. Všechny materiály si můžete stáhnout přímo odtud.</p>
+      </div>
 
-      <!-- CONTENT AREA -->
-      <div class="content-area">
-        <div class="content-scroll">
-          <!-- INTRO SECTION -->
-          <section class="intro-section">
-            <h2>K čemu tahle stránka slouží</h2>
-            <p>Tahle stránka je stručný návod, jak po kampani držet téma úvěrů v běžném provozu týmu. Není to katalog všeho možného. Je to pracovní rozcestník pro manažera.</p>
-            <div class="intro-note">
-              <span>Každý region má k dispozici byznys kouče, které může manažer využít pro sebe i pro své bankéře.</span>
+      <div class="content">
+        <!-- INTRO -->
+        <div style="margin-bottom: 40px;">
+          <div style="background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+            <h2 style="margin: 0 0 12px; font-size: 18px; color: var(--text-dark);">K čemu tahle stránka slouží</h2>
+            <p style="margin: 0 0 16px; color: var(--text-gray);">Stručný návod, jak držet téma úvěrů v běžném provozu. Není to katalog všeho. Je to pracovní rozcestník.</p>
+            <div class="info-box">
+              <span class="info-box-icon">ℹ️</span>
+              <span>Každý region má byznys kouče, který vám a vašim bankéřům pomůže.</span>
             </div>
-          </section>
-
-          <!-- PANEL 1: Na co cílíme -->
-          <section class="panel active" id="panel-1">
-            <h2>Na co teď cílíme</h2>
-            <div class="mini-grid">
-              <div class="mini-card">
-                <h4>Drill</h4>
-                <p>Úvěry musí být v týmu slyšet pořád dokola. Na poradách, v 1:1, při práci s insighty i při rozboru telefonů a schůzek.</p>
-              </div>
-              <div class="mini-card">
-                <h4>Telefon → Salesforce → schůzka → prodej</h4>
-                <p>Chceme návaznost od oslovení klienta až do výsledku.</p>
-              </div>
-              <div class="mini-card">
-                <h4>Konkrétní práce s lidmi</h4>
-                <p>Když se něco nehýbe, řešíme to nad konkrétním klientem a konkrétním krokem.</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- PANEL 2: Insighty -->
-          <section class="panel" id="panel-2">
-            <h2>Nad jakými klienty má manažer s týmem pracovat</h2>
-            <div class="mini-grid">
-              <div class="mini-card">
-                <h4>Úvěry</h4>
-                <ul>
-                  <li>vyčerpané revolvingy</li>
-                  <li>úvěr u konkurence</li>
-                  <li>zamítnuté úvěry</li>
-                  <li>klient čerpá revolvingový produkt</li>
-                </ul>
-              </div>
-              <div class="mini-card">
-                <h4>Buřinka</h4>
-                <ul>
-                  <li>má nárok na řádný úvěr SS</li>
-                  <li>navyšování UoB</li>
-                  <li>refix</li>
-                  <li>rekonstrukce</li>
-                  <li>refinancování</li>
-                </ul>
-              </div>
-            </div>
-            <div class="callout callout-quote">
-              <span class="callout-icon">💬</span>
-              <div class="callout-content">
-                Manažer má s bankéřem projít: jaký insight klient má, proč je to příležitost, jakou otevřenou otázkou bankéř začne a jaký má být další krok.
-              </div>
-            </div>
-          </section>
-
-          <!-- PANEL 3: Týdenní rytmus -->
-          <section class="panel" id="panel-3">
-            <h2>Co má manažer dělat každý týden</h2>
-            <ol>
-              <li>Krátký drill nad insighty.</li>
-              <li>Kontrola práce v Salesforce.</li>
-              <li>Rozbor jednoho telefonu nebo jedné schůzky.</li>
-              <li>1:1 s konkrétním člověkem.</li>
-            </ol>
-            <p><strong>Smysl je jednoduchý:</strong> držet téma v běžném provozu, ne jen o něm mluvit.</p>
-          </section>
-
-          <!-- PANEL 4: Aktivity -->
-          <section class="panel" id="panel-4">
-            <h2>Hlavní aktivity pro manažera</h2>
-            <p>Klikní na aktivitu níže. Dole se zobrazí její detail a můžete si ji stáhnout jako samostatný soubor.</p>
-
-            <div class="activity-tiles" role="tablist">
-              <button class="activity-tile active" data-activity="activity-1" role="tab">
-                <div class="activity-tile-title">1. Drill nad insighty</div>
-                <div class="activity-tile-meta">Práce nad konkrétními klienty z insightů.</div>
-              </button>
-              <button class="activity-tile" data-activity="activity-2" role="tab">
-                <div class="activity-tile-title">2. Telefon → schůzka</div>
-                <div class="activity-tile-meta">Otevření tématu po telefonu a navázání do schůzky.</div>
-              </button>
-              <button class="activity-tile" data-activity="activity-3" role="tab">
-                <div class="activity-tile-title">3. Krátká příprava</div>
-                <div class="activity-tile-meta">Rychlá 3minutová příprava bez přetížení.</div>
-              </button>
-              <button class="activity-tile" data-activity="activity-4" role="tab">
-                <div class="activity-tile-title">4. Otázky místo produktů</div>
-                <div class="activity-tile-meta">Otevřené otázky místo skoku do nabídky.</div>
-              </button>
-              <button class="activity-tile" data-activity="activity-5" role="tab">
-                <div class="activity-tile-title">5. Rozbor reálné situace</div>
-                <div class="activity-tile-meta">Učení se z telefonu nebo schůzky z praxe.</div>
-              </button>
-              <button class="activity-tile" data-activity="activity-6" role="tab">
-                <div class="activity-tile-title">6. Sdílení dobré praxe</div>
-                <div class="activity-tile-meta">Co fungovalo a co si tým může převzít.</div>
-              </button>
-            </div>
-
-            <div class="activity-detail-view">
-              <section class="activity-detail-panel active" id="activity-1">
-                <span class="activity-tag">Drill nad insighty</span>
-                <h3>Cíl</h3>
-                <p>Naučit tým pracovat nad konkrétními klienty, ne obecně nad tématem.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vytáhne 3 až 5 konkrétních klientů z insightů.</li>
-                      <li>Vybere bankéře, kteří s nimi mají pracovat.</li>
-                      <li>Nechá každého stručně říct:
-                        <ul>
-                          <li>co o klientovi ví,</li>
-                          <li>proč je to příležitost,</li>
-                          <li>co ještě potřebuje zjistit,</li>
-                          <li>jakou otevřenou otázkou začne.</li>
-                        </ul>
-                      </li>
-                      <li>Na konci s každým domluví další konkrétní krok.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Co ten insight o klientovi říká?</li>
-                      <li>Proč je to pro tebe příležitost?</li>
-                      <li>Co o klientovi už víš?</li>
-                      <li>Co ještě potřebuješ zjistit?</li>
-                      <li>Jak se ho na to zeptáš otevřeně?</li>
-                      <li>Jaký má být další krok?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Nezajímá mě obecně, jestli se umíš ptát na úvěry. Zajímá mě, jak otevřeš téma právě u tohoto klienta, kterého ti ukazuje insight."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_1_drill_nad_insighty.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-
-              <section class="activity-detail-panel" id="activity-2">
-                <span class="activity-tag">Telefon → schůzka</span>
-                <h3>Cíl</h3>
-                <p>Dostat bankéře k tomu, aby uměl téma úvěru otevřít po telefonu a přenést ho do schůzky.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vezme jednoho klienta z insightu.</li>
-                      <li>Nechá bankéře připravit si krátké oslovení.</li>
-                      <li>Požádá ho, aby nahlas řekl první dvě věty hovoru.</li>
-                      <li>Společně upraví formulaci tak, aby zněla přirozeně a otevřeně.</li>
-                      <li>Domluví, co je cílem hovoru a jak má bankéř klienta dostat do dalšího kroku.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Jak klientovi vysvětlíš, proč mu voláš?</li>
-                      <li>Jakou otevřenou otázkou rozhovor otevřeš?</li>
-                      <li>Co chceš v hovoru zjistit?</li>
-                      <li>Jak poznáš, že má smysl jít do schůzky?</li>
-                      <li>Jak klientovi nabídneš další krok?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Zkus mi teď říct první dvě věty, kterými tomu klientovi zavoláš."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_2_telefon_schuzka.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-
-              <section class="activity-detail-panel" id="activity-3">
-                <span class="activity-tag">Krátká příprava na schůzku</span>
-                <h3>Cíl</h3>
-                <p>Udržet přípravu jednoduchou a použitelnou, ne těžkopádnou.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vybere 2 až 3 klienty z insightů, které budou bankéři řešit.</li>
-                      <li>Dá bankéřům 3 minuty na přípravu.</li>
-                      <li>Řekne jim, že si mají ujasnit pouze tři věci: co o klientovi už vím, co ještě nevím a na co se ho chci zeptat.</li>
-                      <li>Pak nechá jednoho bankéře přípravu krátce odprezentovat.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Co je pro tebe na tom klientovi hlavní?</li>
-                      <li>Co potřebuješ pochopit, abys věděl, co opravdu řeší?</li>
-                      <li>Jak se na to zeptáš přirozeně?</li>
-                      <li>Co bys na schůzce neměl minout?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Příprava nemá být složitá. Stačí tři minuty, během kterých si ujasníš, co víš, co nevíš a na co se zeptáš."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_3_kratka_priprava_na_schuzku.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-
-              <section class="activity-detail-panel" id="activity-4">
-                <span class="activity-tag">Otázky místo produktů</span>
-                <h3>Cíl</h3>
-                <p>Naučit bankéře objevovat potřebu klienta přes otevřené otázky, ne skokem do nabídky.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vezme jednu typickou situaci z praxe.</li>
-                      <li>Nechá bankéře napsat 3 až 5 otázek, které by klientovi položili.</li>
-                      <li>Společně z nich vybere ty, které jsou opravdu otevřené a rozhovor rozvíjejí.</li>
-                      <li>Společně doplní, jak na odpověď klienta navázat.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Která otázka klienta otevře a která ho zavře?</li>
-                      <li>Která otázka ti pomůže zjistit jeho plány, obavy nebo priority?</li>
-                      <li>Jak budeš reagovat, když klient odpoví obecně?</li>
-                      <li>Jak ho dostaneš do konkrétní situace?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Nechci, abys skákal rovnou do produktu. Nejdřív potřebuji, abys pochopil, co klient opravdu řeší."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_4_otazky_miste_produktu.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-
-              <section class="activity-detail-panel" id="activity-5">
-                <span class="activity-tag">Rozbor reálné situace</span>
-                <h3>Cíl</h3>
-                <p>Učit se z reálné praxe, ne z teorie.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vybere jeden čerstvý telefonát nebo jednu schůzku.</li>
-                      <li>Nechá bankéře stručně popsat, co se stalo.</li>
-                      <li>Pak s týmem rozebere, jak bylo téma otevřené, co bankéř zjistil, kde se mohl doptat víc a kde byla další obchodní příležitost.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Co v tom rozhovoru fungovalo?</li>
-                      <li>Kde jsme se spokojili moc brzo s první odpovědí?</li>
-                      <li>Jaká otevřená otázka tam ještě mohla zaznít?</li>
-                      <li>Co dalšího tady mohlo klientovi dávat smysl?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Nedíváme se na to proto, abychom někoho shodili. Díváme se na to proto, abychom se z toho všichni něco naučili."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_5_rozbor_realne_situace.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-
-              <section class="activity-detail-panel" id="activity-6">
-                <span class="activity-tag">Sdílení dobré praxe</span>
-                <h3>Cíl</h3>
-                <p>Ukazovat týmu, že to jde, a posilovat jistotu přes konkrétní úspěšné příklady.</p>
-
-                <div class="activity-detail-grid">
-                  <div class="activity-detail-block">
-                    <h4>Co manažer udělá</h4>
-                    <ol>
-                      <li>Vyzve 1 až 2 lidi, aby popsali, co se jim povedlo.</li>
-                      <li>Nechce obecné „povedlo se", ale konkrétně: jakého klienta řešili, co otevřeli, jakou větu nebo otázku použili a proč to podle nich zafungovalo.</li>
-                      <li>Společně z toho vytáhne použitelnou větu nebo princip pro ostatní.</li>
-                    </ol>
-                  </div>
-                  <div class="activity-detail-block">
-                    <h4>Na co se doptává</h4>
-                    <ul>
-                      <li>Co přesně jsi klientovi řekl?</li>
-                      <li>Na co jsi se zeptal?</li>
-                      <li>Jak klient reagoval?</li>
-                      <li>Co z toho si může vzít i zbytek týmu?</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div class="callout callout-quote">
-                  <span class="callout-icon">💭</span>
-                  <div class="callout-content">
-                    „Nechci slyšet jen, že se to povedlo. Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo."
-                  </div>
-                </div>
-
-                <div class="activity-actions">
-                  <button class="btn" data-download="aktivita_6_sdileni_dobre_praxe.txt">
-                    <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Stáhnout aktivitu
-                  </button>
-                </div>
-              </section>
-            </div>
-
-            <div class="callout callout-tip">
-              <span class="callout-icon">💡</span>
-              <div class="callout-content">
-                Tlačítko „Stáhnout aktivitu" vytvoří soubor přímo z této stránky. Nemusíš do GitHubu nahrávat žádné další přílohy.
-              </div>
-            </div>
-          </section>
-
-          <!-- PANEL 5: 1:1 -->
-          <section class="panel" id="panel-5">
-            <h2>Jak má vypadat 1:1</h2>
-            <ol>
-              <li>Otevři konkrétní klienty z insightů.</li>
-              <li>Rozebírej, co bankéř otevřel a zjistil.</li>
-              <li>Napoj to na schůzku a obchod.</li>
-              <li>Domluv další konkrétní krok.</li>
-            </ol>
-            <div class="callout callout-quote">
-              <span class="callout-icon">💬</span>
-              <div class="callout-content">
-                „Nechci slyšet jen, že jsi klienta oslovil. Chci slyšet, co jsi otevřel, co jsi zjistil a co jsi tím posunul."
-              </div>
-            </div>
-          </section>
-
-          <!-- PANEL 6: Co dělat s bankéřem -->
-          <section class="panel" id="panel-6">
-            <h2>Co má manažer dělat s bankéřem, který to neposouvá</h2>
-            <ol>
-              <li>Vezmi konkrétního klienta z insightu.</li>
-              <li>Nech bankéře popsat, kde se zasekl.</li>
-              <li>Rozbij to na první malý krok.</li>
-              <li>Dej termín a kontrolu.</li>
-            </ol>
-            <p><strong>Otázky pro manažera:</strong> Co ti brání s tím klientem pracovat? Co uděláš jako první krok? Kdy to uděláš? Jak poznáme posun?</p>
-          </section>
-
-          <!-- PANEL 7: Pracovní listy -->
-          <section class="panel" id="panel-7">
-            <h2>Pracovní listy</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Pracovní listy jsou taky součástí této stránky. Stáhnou se rovnou z kódu, bez dalších souborů.</p>
-            <div class="downloads-grid">
-              <div class="download-card">
-                <h4>Práce s insightem</h4>
-                <p>List pro práci nad konkrétním klientem.</p>
-                <button class="btn" data-download="pracovni_list_1_prace_s_insightem.txt">
-                  <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                  </svg>
-                  Stáhnout list
-                </button>
-              </div>
-              <div class="download-card">
-                <h4>1:1 nad klientem</h4>
-                <p>List pro individuální práci s bankéřem.</p>
-                <button class="btn" data-download="pracovni_list_2_1na1_nad_klientem.txt">
-                  <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                  </svg>
-                  Stáhnout list
-                </button>
-              </div>
-              <div class="download-card">
-                <h4>Práce s bankéřem</h4>
-                <p>List pro vedení člověka nad jedním klientem a jedním krokem.</p>
-                <button class="btn" data-download="pracovni_list_3_prace_s_bankerem.txt">
-                  <svg class="btn-download-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                  </svg>
-                  Stáhnout list
-                </button>
-              </div>
-            </div>
-          </section>
+          </div>
         </div>
+
+        <!-- PANEL 1 -->
+        <section class="panel active" id="panel-1">
+          <h2>Na co teď cílíme</h2>
+          <div class="cards-grid">
+            <div class="card color-1">
+              <h4>Drill</h4>
+              <p>Úvěry musí být v týmu slyšet pořád dokola – na poradách, v 1:1, při práci s insighty i při rozboru telefonů.</p>
+            </div>
+            <div class="card color-2">
+              <h4>Telefon → Salesforce → schůzka → prodej</h4>
+              <p>Chceme návaznost od oslovení klienta až do výsledku. Bez skoku.</p>
+            </div>
+            <div class="card color-3">
+              <h4>Konkrétní práce s lidmi</h4>
+              <p>Když se něco nehýbe, řešíme to nad konkrétním klientem a konkrétním krokem.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- PANEL 2 -->
+        <section class="panel" id="panel-2">
+          <h2>Nad jakými klienty má manažer s týmem pracovat</h2>
+          <div class="cards-grid">
+            <div class="card color-2">
+              <h4>Úvěry</h4>
+              <ul>
+                <li>Vyčerpané revolvingy</li>
+                <li>Úvěr u konkurence</li>
+                <li>Zamítnuté úvěry</li>
+                <li>Čerpání revolvingu</li>
+              </ul>
+            </div>
+            <div class="card color-3">
+              <h4>Buřinka</h4>
+              <ul>
+                <li>Nárok na řádný úvěr SS</li>
+                <li>Navyšování UoB</li>
+                <li>Refix</li>
+                <li>Rekonstrukce</li>
+              </ul>
+            </div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-icon">💬</span>
+            <span><strong>Konkrétní postup:</strong> Jaký insight klient má? Proč je to příležitost? Jakou otevřenou otázkou začnete? Jaký je další krok?</span>
+          </div>
+        </section>
+
+        <!-- PANEL 3 -->
+        <section class="panel" id="panel-3">
+          <h2>Co má manažer dělat každý týden</h2>
+          <ol>
+            <li><strong>Krátký drill</strong> nad insighty</li>
+            <li><strong>Kontrola</strong> práce v Salesforce</li>
+            <li><strong>Rozbor</strong> jednoho telefonu nebo schůzky</li>
+            <li><strong>1:1</strong> s konkrétním člověkem</li>
+          </ol>
+          <div class="info-box">
+            <span class="info-box-icon">✓</span>
+            <span><strong>Smysl:</strong> Držet téma v běžném provozu, ne jen o něm mluvit.</span>
+          </div>
+        </section>
+
+        <!-- PANEL 4 -->
+        <section class="panel" id="panel-4">
+          <h2>Hlavní aktivity pro manažera</h2>
+          <p>Klikníte na aktivitu. Dole se zobrazí detail + možnost stáhnout si ji jako soubor.</p>
+          
+          <div class="activity-grid">
+            <button class="activity-btn active color-1" data-activity="1">
+              <strong>1) Drill nad insighty</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">Práce nad konkrétními klienty</div>
+            </button>
+            <button class="activity-btn color-2" data-activity="2">
+              <strong>2) Telefon → schůzka</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">Otevření tématu po telefonu</div>
+            </button>
+            <button class="activity-btn color-3" data-activity="3">
+              <strong>3) Krátká příprava</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">3minutová příprava</div>
+            </button>
+            <button class="activity-btn color-1" data-activity="4">
+              <strong>4) Otázky</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">Místo produktů</div>
+            </button>
+            <button class="activity-btn color-2" data-activity="5">
+              <strong>5) Rozbor</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">Reálné situace</div>
+            </button>
+            <button class="activity-btn color-3" data-activity="6">
+              <strong>6) Sdílení praxe</strong>
+              <div style="font-size: 12px; font-weight: 400; margin-top: 4px; color: var(--text-gray);">Co fungovalo</div>
+            </button>
+          </div>
+
+          <!-- ACTIVITY DETAILS -->
+          <div class="activity-detail active" id="detail-1">
+            <span class="activity-tag color-1">Aktivita 1 – Drill</span>
+            <h3>Cíl: Pracovat nad konkrétními klienty, ne obecně</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vytáhne 3–5 konkrétních klientů z insightů</li>
+                  <li>Vybere bankéře, kteří s nimi budou pracovat</li>
+                  <li>Nechá každého říct: co o klientovi ví, proč je to příležitost, co chybí, jakou otázkou začne</li>
+                  <li>Domluví s každým další konkrétní krok</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Co insight říká?</li>
+                  <li>Proč je to příležitost?</li>
+                  <li>Co víš?</li>
+                  <li>Co chybí?</li>
+                  <li>Jak se ptáš otevřeně?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Nezajímá mě, jestli se umíš ptát na úvěry obecně. Zajímá mě, jak to otevřeš u TOHO klienta."</span>
+            </div>
+            <button class="btn" data-download="aktivita_1.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="activity-detail" id="detail-2">
+            <span class="activity-tag color-2">Aktivita 2 – Telefon</span>
+            <h3>Cíl: Téma úvěru otevřít po telefonu a přenést do schůzky</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vezme jednoho klienta z insightu</li>
+                  <li>Nechá bankéře připravit krátké oslovení</li>
+                  <li>Požádá ho, aby řekl první dvě věty</li>
+                  <li>Společně to upraví, aby znělo přirozeně</li>
+                  <li>Domluví cíl hovoru a další krok</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Proč mu voláš?</li>
+                  <li>Jakou otázkou začneš?</li>
+                  <li>Co chceš zjistit?</li>
+                  <li>Jak poznáš, že má smysl schůzka?</li>
+                  <li>Jak nabídneš další krok?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Zkus mi teď říct první dvě věty, kterými tomu klientovi zavoláš."</span>
+            </div>
+            <button class="btn" data-download="aktivita_2.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="activity-detail" id="detail-3">
+            <span class="activity-tag color-3">Aktivita 3 – Příprava</span>
+            <h3>Cíl: Přípravu jednoduchý a použitelný</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vybere 2–3 klienty z insightů</li>
+                  <li>Dá bankéřům 3 minuty na přípravu</li>
+                  <li>Řekne: ujasnit si 3 věci (co vím, co nevím, na co se ptám)</li>
+                  <li>Nechá jednoho krátce prezentovat</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Co je hlavní?</li>
+                  <li>Co potřebuješ pochopit?</li>
+                  <li>Jak se na to ptáš?</li>
+                  <li>Co by si neměl minout?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Stačí 3 minuty na ujasnění: co víš, co nevíš, na co se ptáš."</span>
+            </div>
+            <button class="btn" data-download="aktivita_3.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="activity-detail" id="detail-4">
+            <span class="activity-tag color-1">Aktivita 4 – Otázky</span>
+            <h3>Cíl: Otevřené otázky místo skoku do nabídky</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vezme typickou situaci z praxe</li>
+                  <li>Nechá bankéře napsat 3–5 otázek</li>
+                  <li>Vybere ty opravdu otevřené</li>
+                  <li>Doplní, jak na odpověď navázat</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Která otázka otevře?</li>
+                  <li>Která zavře?</li>
+                  <li>Jak poznáš plány a obavy?</li>
+                  <li>Jak z obecné odpovědi vytáhneš konkrétno?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Nechci, aby skákal do produktu. Chci, aby rozuměl, co klient opravdu řeší."</span>
+            </div>
+            <button class="btn" data-download="aktivita_4.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="activity-detail" id="detail-5">
+            <span class="activity-tag color-2">Aktivita 5 – Rozbor</span>
+            <h3>Cíl: Učit se z reálné praxe</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vezme jeden čerstvý telefonát nebo schůzku</li>
+                  <li>Nechá bankéře popsat, co se stalo</li>
+                  <li>Rozebere: jak bylo téma otevřeno, co se zjistilo, kde se mohl ptát víc, kde byla příležitost</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Co fungovalo?</li>
+                  <li>Kde jsme se spokojili moc brzo?</li>
+                  <li>Jaká otázka mohla zaznít?</li>
+                  <li>Jaká další příležitost?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Nedíváme se, abychom někoho shodili. Chceme se všichni něco naučit."</span>
+            </div>
+            <button class="btn" data-download="aktivita_5.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="activity-detail" id="detail-6">
+            <span class="activity-tag color-3">Aktivita 6 – Sdílení</span>
+            <h3>Cíl: Ukázat týmu, že to jde</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Co manažer udělá</h4>
+                <ol>
+                  <li>Vyzve 1–2 lidi, aby popsali, co se jim povedlo</li>
+                  <li>Nechce „povedlo se", ale konkrétně: kdo, co, jakou větu, proč to fungovalo</li>
+                  <li>Vytáhne z toho použitelný princip pro ostatní</li>
+                </ol>
+              </div>
+              <div class="detail-block">
+                <h4>Na co se ptá manažer</h4>
+                <ul>
+                  <li>Co přesně jsi řekl?</li>
+                  <li>Na co ses zeptal?</li>
+                  <li>Jak klient reagoval?</li>
+                  <li>Co si vzít do týmu?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="info-box">
+              <span class="info-box-icon">💭</span>
+              <span>„Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo."</span>
+            </div>
+            <button class="btn" data-download="aktivita_6.txt">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Stáhnout aktivitu
+            </button>
+          </div>
+
+          <div class="info-box tip">
+            <span class="info-box-icon">💡</span>
+            <span><strong>Tip:</strong> Tlačítko Stáhnout vytvoří soubor přímo z této stránky. Nemusíte nahrávat do GitHubu.</span>
+          </div>
+        </section>
+
+        <!-- PANEL 5 -->
+        <section class="panel" id="panel-5">
+          <h2>Jak má vypadat 1:1</h2>
+          <ol style="font-size: 16px; font-weight: 600;">
+            <li style="margin: 16px 0;">Otevřete konkrétní klienty z insightů</li>
+            <li style="margin: 16px 0;">Rozeberte, co bankéř otevřel a zjistil</li>
+            <li style="margin: 16px 0;">Napojte to na schůzku a obchod</li>
+            <li style="margin: 16px 0;">Domluvte další konkrétní krok</li>
+          </ol>
+          <div class="info-box">
+            <span class="info-box-icon">💬</span>
+            <span><strong>Manažer říká:</strong> „Nechci slyšet, že jsi klienta oslovil. Chci slyšet, co jsi otevřel, co jsi zjistil a co jsi tím posunul."</span>
+          </div>
+        </section>
+
+        <!-- PANEL 6 -->
+        <section class="panel" id="panel-6">
+          <h2>Co dělat s bankéřem, který to neposouvá</h2>
+          <ol style="font-size: 16px; font-weight: 600;">
+            <li style="margin: 16px 0;">Vezměte konkrétního klienta z insightu</li>
+            <li style="margin: 16px 0;">Nechte bankéře popsat, kde se zasekl</li>
+            <li style="margin: 16px 0;">Rozbijte to na PRVNÍ malý krok</li>
+            <li style="margin: 16px 0;">Dejte termín a kontrolu</li>
+          </ol>
+          <div class="info-box">
+            <span class="info-box-icon">❓</span>
+            <span><strong>Klíčové otázky:</strong> Co ti brání? Co uděláš jako první? Kdy? Jak poznáme posun?</span>
+          </div>
+        </section>
+
+        <!-- PANEL 7 -->
+        <section class="panel" id="panel-7">
+          <h2>Pracovní listy</h2>
+          <p style="margin-bottom: 24px;">Tisknutelné listy pro konkrétní práci. Stáhnou se přímo z kódu, bez dalších souborů.</p>
+          <div class="downloads-grid">
+            <div class="download-card">
+              <h4>List 1: Práce s insightem</h4>
+              <p>Rozpis konkrétního klienta – co víme, co potřebujeme zjistit, jakou otázkou začneme.</p>
+              <button class="btn" data-download="list_1.txt">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Stáhnout
+              </button>
+            </div>
+            <div class="download-card">
+              <h4>List 2: 1:1 nad klientem</h4>
+              <p>Individuální práce s bankéřem – co řešil, co zjistil, jak posunul obchod, zpětná vazba.</p>
+              <button class="btn" data-download="list_2.txt">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Stáhnout
+              </button>
+            </div>
+            <div class="download-card">
+              <h4>List 3: Vedení člověka</h4>
+              <p>Řešení zaseknutí – konkrétní klient, konkrétní krok, termín, měřitelný posun.</p>
+              <button class="btn" data-download="list_3.txt">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Stáhnout
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
 
   <script>
-    // ============================================
-    // DOWNLOAD FILE CONTENT DATABASE
-    // ============================================
-    const FILE_CONTENTS = {
-      "aktivita_1_drill_nad_insighty.txt": `AKTIVITA 1: DRILL NAD INSIGHTY
+    // Simple file content library
+    const FILES = {
+      "aktivita_1.txt": `AKTIVITA 1: DRILL NAD INSIGHTY
+===================================
+
+CÍL: Naučit tým pracovat nad konkrétními klienty, ne obecně.
+
+CO MANAŽER UDĚLÁ:
+1. Vytáhne 3–5 konkrétních klientů z insightů
+2. Vybere bankéře, kteří s nimi budou pracovat
+3. Nechá každého stručně říct:
+   • Co o klientovi víš?
+   • Proč je to příležitost?
+   • Co ještě potřebuješ zjistit?
+   • Jakou otevřenou otázkou začneš?
+4. Domluví s každým další konkrétní krok
+
+NA CO SE PTÁT:
+→ Co ten insight o klientovi říká?
+→ Proč je to pro tebe příležitost?
+→ Co o klientovi už víš?
+→ Co ještě potřebuješ zjistit?
+→ Jak se ho na to zeptáš otevřeně?
+→ Jaký má být další krok?
+
+PŘÍMÁ ŘEČ:
+"Nezajímá mě obecně, jestli se umíš ptát na úvěry. Zajímá mě, jak otevřeš 
+téma právě u tohoto klienta, kterého ti ukazuje insight."
+
+VÝSTUP:
+Každý bankéř odchází s konkrétním klientem, konkrétní otázkou a dalším krokem.`,
+
+      "aktivita_2.txt": `AKTIVITA 2: TELEFON → SCHŮZKA
 ================================
 
-Cíl:
-Naučit tým pracovat nad konkrétními klienty, ne obecně nad tématem.
+CÍL: Naučit bankéře otevřít téma po telefonu a přenést ho do schůzky.
 
-Co manažer udělá:
-1. Vytáhne 3 až 5 konkrétních klientů z insightů.
-2. Vybere bankéře, kteří s nimi mají pracovat.
-3. Nechá každého stručně říct:
-   - co o klientovi ví,
-   - proč je to příležitost,
-   - co ještě potřebuje zjistit,
-   - jakou otevřenou otázkou začne.
-4. Na konci s každým domluví další konkrétní krok.
+CO MANAŽER UDĚLÁ:
+1. Vezme jednoho klienta z insightu
+2. Nechá bankéře připravit krátké oslovení
+3. Požádá ho, aby nahlas řekl první dvě věty hovoru
+4. Společně to upraví, aby znělo přirozeně a otevřeně
+5. Domluví cíl hovoru a jak dostat klienta do dalšího kroku
 
-Na co se manažer doptává:
-- Co ten insight o klientovi říká?
-- Proč je to pro tebe příležitost?
-- Co o klientovi už víš?
-- Co ještě potřebuješ zjistit?
-- Jak se ho na to zeptáš otevřeně?
-- Jaký má být další krok po telefonátu nebo schůzce?
+NA CO SE PTÁT:
+→ Jak klientovi vysvětlíš, proč mu voláš?
+→ Jakou otevřenou otázkou rozhovor otevřeš?
+→ Co chceš v hovoru zjistit?
+→ Jak poznáš, že má smysl jít do schůzky?
+→ Jak klientovi nabídneš další krok?
 
-Přímá řeč manažera:
-"Nezajímá mě obecně, jestli se umíš ptát na úvěry. Zajímá mě, jak otevřeš téma právě u tohoto klienta, kterého ti ukazuje insight."
-
-Výstup:
-Každý bankéř odchází s konkrétním klientem, konkrétní otázkou a konkrétním dalším krokem.`,
-
-      "aktivita_2_telefon_schuzka.txt": `AKTIVITA 2: TELEFON → SCHŮZKA
-==============================
-
-Cíl:
-Dostat bankéře k tomu, aby uměl téma úvěru otevřít po telefonu a přenést ho do schůzky.
-
-Co manažer udělá:
-1. Vezme jednoho klienta z insightu.
-2. Nechá bankéře připravit si krátké oslovení.
-3. Požádá ho, aby nahlas řekl první dvě věty hovoru.
-4. Společně upraví formulaci tak, aby zněla přirozeně a otevřeně.
-5. Domluví, co je cílem hovoru a jak má bankéř klienta dostat do dalšího kroku.
-
-Na co se manažer doptává:
-- Jak klientovi vysvětlíš, proč mu voláš?
-- Jakou otevřenou otázkou rozhovor otevřeš?
-- Co chceš v hovoru zjistit?
-- Jak poznáš, že má smysl jít do schůzky?
-- Jak klientovi nabídneš další krok?
-
-Přímá řeč manažera:
+PŘÍMÁ ŘEČ:
 "Zkus mi teď říct první dvě věty, kterými tomu klientovi zavoláš."
 
-Výstup:
-Bankéř má připravený konkrétní začátek hovoru, ví, co chce zjistit, a ví, kam má hovor vést.`,
+VÝSTUP:
+Bankéř má připravený konkrétní začátek hovoru, ví, co chce zjistit, a ví, 
+kam má hovor směřovat.`,
 
-      "aktivita_3_kratka_priprava_na_schuzku.txt": `AKTIVITA 3: KRÁTKÁ PŘÍPRAVA NA SCHŮZKU
-=======================================
+      "aktivita_3.txt": `AKTIVITA 3: KRÁTKÁ PŘÍPRAVA NA SCHŮZKU
+======================================
 
-Cíl:
-Udržet přípravu jednoduchou a použitelnou, ne těžkopádnou.
+CÍL: Udržet přípravu jednoduchou a použitelnou.
 
-Co manažer udělá:
-1. Vybere 2 až 3 klienty z insightů, které budou bankéři řešit.
-2. Dá bankéřům 3 minuty na přípravu.
-3. Řekne jim, že si mají ujasnit pouze tři věci:
-   - co o klientovi už vím,
-   - co ještě nevím,
-   - na co se ho chci zeptat.
-4. Pak nechá jednoho bankéře přípravu krátce odprezentovat.
+CO MANAŽER UDĚLÁ:
+1. Vybere 2–3 klienty z insightů
+2. Dá bankéřům 3 minuty na přípravu
+3. Řekne: "Ujasněte si 3 věci: co víte, co nevíte, na co se chcete ptát"
+4. Nechá jednoho bankéře krátce prezentovat
 
-Na co se manažer doptává:
-- Co je pro tebe na tom klientovi hlavní?
-- Co potřebuješ pochopit, abys věděl, co opravdu řeší?
-- Jak se na to zeptáš přirozeně?
-- Co bys na schůzce neměl minout?
+NA CO SE PTÁT:
+→ Co je pro tebe na tom klientovi hlavní?
+→ Co potřebuješ pochopit, aby jsi věděl, co opravdu řeší?
+→ Jak se na to zeptáš přirozeně?
+→ Co bys na schůzce neměl minout?
 
-Přímá řeč manažera:
-"Příprava nemá být složitá. Stačí tři minuty, během kterých si ujasníš, co víš, co nevíš a na co se zeptáš."
+PŘÍMÁ ŘEČ:
+"Příprava nemá být složitá. Stačí 3 minuty, během kterých si ujasníš,
+co víš, co nevíš a na co se zeptáš."
 
-Výstup:
-Bankéř nejde na schůzku naslepo a má připravené 1 až 2 silné otevřené otázky.`,
+VÝSTUP:
+Bankéř nejde na schůzku naslepo a má připravené 1–2 silné otevřené otázky.`,
 
-      "aktivita_4_otazky_miste_produktu.txt": `AKTIVITA 4: OTÁZKY MÍSTO PRODUKTŮ
-==================================
-
-Cíl:
-Naučit bankéře objevovat potřebu klienta přes otevřené otázky, ne skokem do nabídky.
-
-Co manažer udělá:
-1. Vezme jednu typickou situaci z praxe.
-2. Nechá bankéře napsat 3 až 5 otázek, které by klientovi položili.
-3. Společně z nich vybere ty, které jsou opravdu otevřené a rozhovor rozvíjejí.
-4. Společně doplní, jak na odpověď klienta navázat.
-
-Na co se manažer doptává:
-- Která otázka klienta otevře a která ho zavře?
-- Která otázka ti pomůže zjistit jeho plány, obavy nebo priority?
-- Jak budeš reagovat, když klient odpoví obecně?
-- Jak ho dostaneš do konkrétní situace?
-
-Přímá řeč manažera:
-"Nechci, abys skákal rovnou do produktu. Nejdřív potřebuji, abys pochopil, co klient opravdu řeší."
-
-Výstup:
-Tým si odnese konkrétní otevřené otázky, které může hned používat v praxi.`,
-
-      "aktivita_5_rozbor_realne_situace.txt": `AKTIVITA 5: ROZBOR REÁLNÉ SITUACE
-==================================
-
-Cíl:
-Učit se z reálné praxe, ne z teorie.
-
-Co manažer udělá:
-1. Vybere jeden čerstvý telefonát nebo jednu schůzku.
-2. Nechá bankéře stručně popsat, co se stalo.
-3. Pak s týmem rozebere:
-   - jak bylo téma otevřené,
-   - co bankéř zjistil,
-   - kde se mohl doptat víc,
-   - kde byla další obchodní příležitost.
-
-Na co se manažer doptává:
-- Co v tom rozhovoru fungovalo?
-- Kde jsme se spokojili moc brzo s první odpovědí?
-- Jaká otevřená otázka tam ještě mohla zaznít?
-- Co dalšího tady mohlo klientovi dávat smysl?
-
-Přímá řeč manažera:
-"Nedíváme se na to proto, abychom někoho shodili. Díváme se na to proto, abychom se z toho všichni něco naučili."
-
-Výstup:
-Tým si odnáší 2 až 3 konkrétní poučení do dalšího týdne.`,
-
-      "aktivita_6_sdileni_dobre_praxe.txt": `AKTIVITA 6: SDÍLENÍ DOBRÉ PRAXE
-==============================
-
-Cíl:
-Ukazovat týmu, že to jde, a posilovat jistotu přes konkrétní úspěšné příklady.
-
-Co manažer udělá:
-1. Vyzve 1 až 2 lidi, aby popsali, co se jim povedlo.
-2. Nechce obecné "povedlo se", ale konkrétně:
-   - jakého klienta řešili,
-   - co otevřeli,
-   - jakou větu nebo otázku použili,
-   - proč to podle nich zafungovalo.
-3. Společně z toho vytáhne použitelnou větu nebo princip pro ostatní.
-
-Na co se manažer doptává:
-- Co přesně jsi klientovi řekl?
-- Na co jsi se zeptal?
-- Jak klient reagoval?
-- Co z toho si může vzít i zbytek týmu?
-
-Přímá řeč manažera:
-"Nechci slyšet jen, že se to povedlo. Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo."
-
-Výstup:
-Tým má konkrétní příklad k nápodobě a věří, že to jde.`,
-
-      "pracovni_list_1_prace_s_insightem.txt": `PRACOVNÍ LIST 1: PRÁCE S INSIGHTEM
+      "aktivita_4.txt": `AKTIVITA 4: OTÁZKY MÍSTO PRODUKTŮ
 ===================================
+
+CÍL: Otevřené otázky místo skoku do nabídky.
+
+CO MANAŽER UDĚLÁ:
+1. Vezme typickou situaci z praxe
+2. Nechá bankéře napsat 3–5 otázek
+3. Vybere ty opravdu otevřené, které rozvíjejí rozhovor
+4. Doplní, jak na odpověď navázat
+
+NA CO SE PTÁT:
+→ Která otázka klienta otevře, která ho zavře?
+→ Která otázka ti pomůže zjistit jeho plány a obavy?
+→ Jak budeš reagovat na obecnou odpověď?
+→ Jak z ní vytáhneš konkrétno?
+
+PŘÍMÁ ŘEČ:
+"Nechci, aby skákal do produktu. Chci, aby pochopil, co klient opravdu řeší."
+
+VÝSTUP:
+Tým si odnese konkrétní otevřené otázky do praxe.`,
+
+      "aktivita_5.txt": `AKTIVITA 5: ROZBOR REÁLNÉ SITUACE
+==================================
+
+CÍL: Učit se z reálné praxe.
+
+CO MANAŽER UDĚLÁ:
+1. Vezme jeden čerstvý telefonát nebo schůzku
+2. Nechá bankéře popsat, co se stalo
+3. Rozebere: jak bylo téma otevřeno, co se zjistilo, kde se mohl ptát víc,
+   kde byla další obchodní příležitost
+
+NA CO SE PTÁT:
+→ Co v tom rozhovoru fungovalo?
+→ Kde jsme se spokojili moc brzo?
+→ Jaká otevřená otázka tam ještě mohla zaznít?
+→ Jaká další příležitost tady byla?
+
+PŘÍMÁ ŘEČ:
+"Nedíváme se na to, abychom někoho shodili. Chceme se z toho všichni
+něco naučit."
+
+VÝSTUP:
+Tým si odnáší 2–3 konkrétní poučení do dalšího týdne.`,
+
+      "aktivita_6.txt": `AKTIVITA 6: SDÍLENÍ DOBRÉ PRAXE
+================================
+
+CÍL: Ukázat týmu, že to jde.
+
+CO MANAŽER UDĚLÁ:
+1. Vyzve 1–2 lidi, aby popsali, co se jim povedlo
+2. Nechce „povedlo se", ale konkrétně: kdo, jaký klient, co otevřeli,
+   jakou větu nebo otázku použili, proč to fungovalo
+3. Vytáhne z toho použitelný princip
+
+NA CO SE PTÁT:
+→ Co přesně jsi klientovi řekl?
+→ Na co jsi se zeptal?
+→ Jak klient reagoval?
+→ Co z toho si může vzít celý tým?
+
+PŘÍMÁ ŘEČ:
+"Chci slyšet, co přesně jsi řekl a proč si myslíš, že to fungovalo."
+
+VÝSTUP:
+Tým má konkrétní příklad a věří, že to jde.`,
+
+      "list_1.txt": `PRACOVNÍ LIST 1: PRÁCE S INSIGHTEM
+====================================
 
 Datum: ________________
 Manažer: ________________
-Účastníci: ________________
 
-KLIENT:
+KLIENT / KLIENTI:
 Název/ID: ________________
+Limit/Produkt: ________________
 
-CO O KLIENTOVI VÍME?
-- Revolvingový limit: ________________
-- Poslední aktivita: ________________
-- Poznámka: ________________
+CO O KLIENTOVI VÍTE?
+________________________________
+________________________________
 
 PROČ JE TO PŘÍLEŽITOST?
-________________
-________________
-________________
+________________________________
+________________________________
 
-CO JEŠTĚ POTŘEBUJEME ZJISTIT?
-1. ________________
-2. ________________
-3. ________________
+CO JEŠTĚ POTŘEBUJETE ZJISTIT?
+1. ________________________________
+2. ________________________________
+3. ________________________________
 
-JAKOU OTEVŘENOU OTÁZKOU ZAČNEME?
-"________________"
+JAKOU OTEVŘENOU OTÁZKOU ZAČNETE?
+"________________________________"
 
-DALŠÍ KONKRÉTNÍ KROK:
+BANÉŘ NA ÚČELU:
+Jméno: ________________
+Jaký je jeho hlavní přístup: ________________
+
+NÁSLEDUJÍCÍ KONKRÉTNÍ KROK:
 Co: ________________
-Kdo: ________________
+Kdo to udělá: ________________
 Kdy: ________________
 
-POZNAMKY:
-________________
-________________`,
+KONTAKT NA KLIENTA:
+________________________________
 
-      "pracovni_list_2_1na1_nad_klientem.txt": `PRACOVNÍ LIST 2: 1:1 NAD KLIENTEM
-==================================
+POZNÁMKY:
+________________________________
+________________________________`,
+
+      "list_2.txt": `PRACOVNÍ LIST 2: 1:1 NAD KLIENTEM
+===================================
 
 Datum: ________________
 Manažer: ________________
 Bankéř: ________________
 
-KONKRÉTNÍ KLIENT:
+KLIENT / PŘÍPAD:
 Název/ID: ________________
 
 CO BANKÉŘ OTEVŘEL?
-________________
-________________
+________________________________
+________________________________
 
-CO ZJISTIL?
-________________
-________________
+CO SE ZJISTILO?
+________________________________
+________________________________
 
-JAK BANKÉŘ POSTUPOVAL?
-- Telefon / Schůzka / Email
-- Kdy: ________________
-- Jak to probíhalo: ________________
+JAKÝ NEJMÉNĚ KROK JSEM PROVEDL?
+Schůzka? Telefonát? Email?
+Kdy: ________________
+Výsledek: ________________
 
 POSUN OBCHODU:
-Před: ________________
-Teď: ________________
-Příští krok: ________________
+Stav DŘÍV:     ________________
+Stav TEĎKA:    ________________
+PŘÍŠTÍ KROK:   ________________
 
-ZPĚTNÁ VAZBA MANAŽERA:
 CO SE POVEDLO:
-________________
+________________________________
+________________________________
 
-CO BYCHOM MOHLI ZLEPŠIT:
-________________
+CO BY SE DALO ZLEPŠIT:
+________________________________
+________________________________
 
 KONKRÉTNÍ ÚKOL:
-Co: ________________
+Co:  ________________
 Kdy: ________________
 
-POZNAMKY:
-________________
-________________`,
+POZNÁMKY:
+________________________________
+________________________________`,
 
-      "pracovni_list_3_prace_s_bankerem.txt": `PRACOVNÍ LIST 3: PRÁCE S BANKÉŘEM
-===================================
+      "list_3.txt": `PRACOVNÍ LIST 3: VEDENÍ ČLOVĚKA
+=================================
 
 Datum: ________________
 Manažer: ________________
 Bankéř: ________________
 
 PROBLÉM / ZASEKNUTÍ:
-________________
-________________
+________________________________
+________________________________
 
 KONKRÉTNÍ KLIENT, KTERÝ JE PŘÍKLADEM:
-Název/ID: ________________
+Jméno/ID: ________________
 
-PRVNÍ MALÝ KROK (specificky, ne obecně):
-________________
-________________
+PRVNÍ MALÝ KROK (konkrétně!):
+________________________________
+________________________________
 
 TERMÍN SPLNĚNÍ:
 ________________
 
-KONTROLNÍ OTÁZKY PRO BANKÉŘE:
-- Co budeš konkrétně dělat?
-________________
+MĚŘITELNÝ VÝSLEDEK:
+Co se musí stát, aby jsme věděli, že se posunulo?
+________________________________
+________________________________
 
-- Jak to poznáme, že se posunulo?
-________________
-
-- Na co ti budu stoupat v pondělí?
-________________
-
-PODPIS OBOU:
-Manažer: ________________     Bankéř: ________________
+MANAŽER SE PTÁVÁ:
+□ Co budeš konkrétně dělat?
+□ Jak poznáme, že se posunulo?
+□ Na co ti budu stoupat v pondělí?
 
 KONTROLA V PONDĚLÍ:
-Splneno: ANO / NE / ČÁSTEČNĚ
+Splneno:  ☐ ANO   ☐ NE   ☐ ČÁSTEČNĚ
 
-Co se povedlo:
-________________
+Co fungovalo:
+________________________________
 
-Dalších kroků:
-________________`
+Co dál:
+________________________________
+
+Podpis:
+Manažer: ________________   Bankéř: ________________`
     };
 
-    // ============================================
-    // INITIALIZATION & EVENT LISTENERS
-    // ============================================
-    function initializeApp() {
-      setupNavigation();
-      setupActivityTiles();
-      setupDownloadButtons();
-    }
-
-    // Navigate between panels
-    function setupNavigation() {
-      const navLinks = document.querySelectorAll(".roadmap-nav-link");
-      
-      navLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const panelId = link.getAttribute("data-panel");
-          switchPanel(panelId, link);
-        });
+    // Navigation
+    document.querySelectorAll(".nav-item").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const panelId = "panel-" + this.dataset.step;
+        
+        document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        document.getElementById(panelId)?.classList.add("active");
+        
+        document.querySelector(".content").scrollTop = 0;
       });
-    }
+    });
 
-    function switchPanel(panelId, clickedLink) {
-      // Remove active state from all nav links
-      document.querySelectorAll(".roadmap-nav-link").forEach(link => {
-        link.classList.remove("active");
+    // Activity tiles
+    document.querySelectorAll(".activity-btn").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const actNum = this.dataset.activity;
+        
+        document.querySelectorAll(".activity-btn").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        
+        document.querySelectorAll(".activity-detail").forEach(d => d.classList.remove("active"));
+        document.getElementById("detail-" + actNum)?.classList.add("active");
       });
-      
-      // Add active state to clicked link
-      clickedLink.classList.add("active");
-      
-      // Hide all panels
-      document.querySelectorAll(".panel").forEach(panel => {
-        panel.classList.remove("active");
+    });
+
+    // Download files
+    document.querySelectorAll("[data-download]").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const filename = this.dataset.download;
+        const content = FILES[filename];
+        
+        if (!content) return;
+        
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
       });
-      
-      // Show target panel
-      const targetPanel = document.getElementById(panelId);
-      if (targetPanel) {
-        targetPanel.classList.add("active");
-        // Scroll to top of content area
-        document.querySelector(".content-scroll").scrollTop = 0;
-      }
-    }
-
-    // Activity tile switching
-    function setupActivityTiles() {
-      const tiles = document.querySelectorAll(".activity-tile");
-      
-      tiles.forEach(tile => {
-        tile.addEventListener("click", () => {
-          const activityId = tile.getAttribute("data-activity");
-          
-          // Remove active from all tiles
-          tiles.forEach(t => t.classList.remove("active"));
-          
-          // Add active to clicked tile
-          tile.classList.add("active");
-          
-          // Hide all activity panels
-          document.querySelectorAll(".activity-detail-panel").forEach(panel => {
-            panel.classList.remove("active");
-          });
-          
-          // Show target activity panel
-          const targetPanel = document.getElementById(activityId);
-          if (targetPanel) {
-            targetPanel.classList.add("active");
-          }
-        });
-      });
-    }
-
-    // Download functionality
-    function setupDownloadButtons() {
-      const downloadButtons = document.querySelectorAll('[data-download]');
-      
-      downloadButtons.forEach(button => {
-        button.addEventListener("click", () => {
-          const filename = button.getAttribute("data-download");
-          downloadFile(filename);
-        });
-      });
-    }
-
-    function downloadFile(filename) {
-      const content = FILE_CONTENTS[filename];
-      
-      if (!content) {
-        console.error(`File not found: ${filename}`);
-        return;
-      }
-      
-      // Create blob
-      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-      
-      // Create download link
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename;
-      
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Clean up
-      URL.revokeObjectURL(url);
-    }
-
-    // Initialize on page load
-    document.addEventListener("DOMContentLoaded", initializeApp);
+    });
   </script>
 </body>
 </html>
