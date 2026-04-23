@@ -961,7 +961,7 @@
           <div class="downloads-grid">
             <div class="download-card">
               <h4>List 1: Práce s insightem</h4>
-              <p>Rozpis konkrétního klienta – co víme, co potřebujeme zjistit, jakou otázkou začneme.</p>
+              <p>Krátký checklist k práci nad konkrétní situací klienta.</p>
               <button class="btn" data-print="list_1">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
                 Otevřít pracovní list
@@ -969,7 +969,7 @@
             </div>
             <div class="download-card">
               <h4>List 2: 1:1 nad klientem</h4>
-              <p>Individuální práce s bankéřem – co řešil, co zjistil, jak posunul obchod, zpětná vazba.</p>
+              <p>Checklist pro vedení krátkého manažerského rozhovoru nad klientem.</p>
               <button class="btn" data-print="list_2">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
                 Otevřít pracovní list
@@ -977,7 +977,7 @@
             </div>
             <div class="download-card">
               <h4>List 3: Vedení člověka</h4>
-              <p>Řešení zaseknutí – konkrétní klient, konkrétní krok, termín, měřitelný posun.</p>
+              <p>Checklist pro práci se zaseknutím nebo posunem člověka.</p>
               <button class="btn" data-print="list_3">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
                 Otevřít pracovní list
@@ -1302,157 +1302,82 @@
         openWindow(worksheetPage(
           "#02A3A4",
           "List 1: Práce s insightem",
-          "Rozpis konkrétního klienta – co víme, co potřebujeme zjistit, jakou otázkou začneme.",
+          "Krátký checklist k práci nad konkrétní situací klienta.",
           `<div class="ws-section">
-  <h2>Základní údaje</h2>
   <div class="two-fields">
     <div class="field"><label>Datum</label><span class="line"></span></div>
-    <div class="field"><label>Manažer</label><span class="line"></span></div>
+    <div class="field"><label>Klient / situace</label><span class="line"></span></div>
   </div>
 </div>
 <div class="ws-section">
-  <h2>Klient</h2>
-  <div class="two-fields">
-    <div class="field"><label>Klient / ID</label><span class="line"></span></div>
-    <div class="field"><label>Produkt / Insight</label><span class="line"></span></div>
-  </div>
-</div>
-<div class="ws-section">
-  <h2>Situace klienta</h2>
-  <div class="field"><label>Co o klientovi víme?</label><span class="multi-line"></span></div>
-  <div class="field"><label>Proč je to příležitost?</label><span class="multi-line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Příprava oslovení</h2>
-  <div class="field"><label>Co ještě potřebujeme zjistit? (1)</label><span class="line"></span></div>
-  <div class="field"><label>Co ještě potřebujeme zjistit? (2)</label><span class="line"></span></div>
-  <div class="field"><label>Co ještě potřebujeme zjistit? (3)</label><span class="line"></span></div>
-  <div class="field"><label>Otevřená otázka, kterou začneme:</label><span class="line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Bankéř na případu</h2>
-  <div class="two-fields">
-    <div class="field"><label>Jméno bankéře</label><span class="line"></span></div>
-    <div class="field"><label>Hlavní přístup bankéře</label><span class="line"></span></div>
-  </div>
-</div>
-<div class="ws-section">
-  <h2>Následující konkrétní krok</h2>
-  <div class="three-fields">
-    <div class="field"><label>Co</label><span class="line"></span></div>
-    <div class="field"><label>Kdo to udělá</label><span class="line"></span></div>
-    <div class="field"><label>Kdy</label><span class="line"></span></div>
-  </div>
+  <ul class="check-list">
+    <li><span class="check-box"></span><span>Proč je to příležitost?</span></li>
+    <li><span class="check-box"></span><span>Co už o klientovi víme?</span></li>
+    <li><span class="check-box"></span><span>Co ještě potřebujeme zjistit?</span></li>
+    <li><span class="check-box"></span><span>Jakou otázkou rozhovor otevřeme?</span></li>
+    <li><span class="check-box"></span><span>Co chceme posunout?</span></li>
+    <li><span class="check-box"></span><span>Jaký bude další krok a kdo ho udělá?</span></li>
+  </ul>
 </div>
 <div class="ws-section">
   <h2>Poznámky</h2>
-  <div class="field"><span class="multi-line"></span></div>
+  <div class="field"><span class="multi-line" style="min-height:140px;"></span></div>
 </div>`
         ));
       } else if (key === "list_2") {
         openWindow(worksheetPage(
           "#FF6613",
           "List 2: 1:1 nad klientem",
-          "Individuální práce s bankéřem – co řešil, co zjistil, jak posunul obchod, zpětná vazba.",
+          "Checklist pro vedení krátkého manažerského rozhovoru nad klientem.",
           `<div class="ws-section">
-  <h2>Základní údaje</h2>
   <div class="three-fields">
     <div class="field"><label>Datum</label><span class="line"></span></div>
-    <div class="field"><label>Manažer</label><span class="line"></span></div>
     <div class="field"><label>Bankéř</label><span class="line"></span></div>
-  </div>
-  <div class="field"><label>Klient / Případ</label><span class="line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Průběh práce s klientem</h2>
-  <div class="field"><label>Co bankéř otevřel?</label><span class="multi-line"></span></div>
-  <div class="field"><label>Co se zjistilo?</label><span class="multi-line"></span></div>
-  <div class="field">
-    <label>Poslední kontakt (schůzka / telefonát / e-mail)</label>
-    <div class="two-fields" style="margin-top:6px;">
-      <div class="field"><label>Kdy</label><span class="line line-sm"></span></div>
-      <div class="field"><label>Výsledek</label><span class="line line-sm"></span></div>
-    </div>
+    <div class="field"><label>Klient / situace</label><span class="line"></span></div>
   </div>
 </div>
 <div class="ws-section">
-  <h2>Posun obchodu</h2>
-  <div class="three-fields">
-    <div class="field"><label>Stav dříve</label><span class="line"></span></div>
-    <div class="field"><label>Stav nyní</label><span class="line"></span></div>
-    <div class="field"><label>Příští krok</label><span class="line"></span></div>
-  </div>
+  <ul class="check-list">
+    <li><span class="check-box"></span><span>Co bankéř udělal od minula?</span></li>
+    <li><span class="check-box"></span><span>Co zjistil?</span></li>
+    <li><span class="check-box"></span><span>Co se povedlo?</span></li>
+    <li><span class="check-box"></span><span>Co je potřeba zlepšit nebo udělat jinak?</span></li>
+    <li><span class="check-box"></span><span>Jaký je další konkrétní krok?</span></li>
+    <li><span class="check-box"></span><span>Kdy se k tomu vrátíme?</span></li>
+  </ul>
 </div>
 <div class="ws-section">
-  <h2>Zpětná vazba</h2>
-  <div class="field"><label>Co se povedlo</label><span class="multi-line"></span></div>
-  <div class="field"><label>Co by se dalo zlepšit</label><span class="multi-line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Konkrétní úkol</h2>
-  <div class="two-fields">
-    <div class="field"><label>Co</label><span class="line"></span></div>
-    <div class="field"><label>Kdy</label><span class="line"></span></div>
-  </div>
-</div>
-<div class="ws-section">
-  <h2>Poznámky</h2>
-  <div class="field"><span class="multi-line"></span></div>
+  <h2>Poznámky / závěry</h2>
+  <div class="field"><span class="multi-line" style="min-height:140px;"></span></div>
 </div>`
         ));
       } else if (key === "list_3") {
         openWindow(worksheetPage(
           "#2087ED",
           "List 3: Vedení člověka",
-          "Řešení zaseknutí – konkrétní klient, konkrétní krok, termín, měřitelný posun.",
+          "Checklist pro práci se zaseknutím nebo posunem člověka.",
           `<div class="ws-section">
-  <h2>Základní údaje</h2>
-  <div class="three-fields">
+  <div class="two-fields">
     <div class="field"><label>Datum</label><span class="line"></span></div>
-    <div class="field"><label>Manažer</label><span class="line"></span></div>
     <div class="field"><label>Bankéř</label><span class="line"></span></div>
   </div>
 </div>
 <div class="ws-section">
-  <h2>Situace</h2>
-  <div class="field"><label>Problém / Zaseknutí</label><span class="multi-line"></span></div>
-  <div class="field"><label>Konkrétní klient jako příklad (jméno / ID)</label><span class="line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Plán</h2>
-  <div class="field"><label>První malý krok (konkrétně)</label><span class="multi-line"></span></div>
-  <div class="two-fields">
-    <div class="field"><label>Termín splnění</label><span class="line"></span></div>
-    <div class="field"><label>Měřitelný výsledek</label><span class="line"></span></div>
-  </div>
-</div>
-<div class="ws-section">
-  <h2>Manažer se ptá</h2>
   <ul class="check-list">
-    <li><span class="check-box"></span><span>Co budeš konkrétně dělat?</span></li>
-    <li><span class="check-box"></span><span>Jak poznáme, že se posunulo?</span></li>
-    <li><span class="check-box"></span><span>Na co se tě zeptám na příští schůzce?</span></li>
+    <li><span class="check-box"></span><span>V čem je problém? (pojmenování)</span></li>
+    <li><span class="check-box"></span><span>Konkrétní situace, na které to vidím</span></li>
+  </ul>
+  <div class="field" style="margin-top:4px;"><span class="multi-line" style="min-height:60px;"></span></div>
+  <ul class="check-list" style="margin-top:8px;">
+    <li><span class="check-box"></span><span>Co by měl být první malý krok?</span></li>
+    <li><span class="check-box"></span><span>Jaký je termín?</span></li>
+    <li><span class="check-box"></span><span>Kdy se k tomu vrátíme? (další kontrola)</span></li>
+    <li><span class="check-box"></span><span>Na co si dát pozor?</span></li>
   </ul>
 </div>
 <div class="ws-section">
-  <h2>Kontrola</h2>
-  <div class="field" style="margin-bottom:10px;">
-    <label>Splněno:</label>
-    <div class="radio-row">
-      <div class="radio-item"><span class="radio-box"></span><span>ANO</span></div>
-      <div class="radio-item"><span class="radio-box"></span><span>NE</span></div>
-      <div class="radio-item"><span class="radio-box"></span><span>ČÁSTEČNĚ</span></div>
-    </div>
-  </div>
-  <div class="field"><label>Co fungovalo</label><span class="line"></span></div>
-  <div class="field"><label>Co dál</label><span class="line"></span></div>
-</div>
-<div class="ws-section">
-  <h2>Podpisy</h2>
-  <div class="two-fields">
-    <div class="field"><label>Manažer</label><span class="line"></span></div>
-    <div class="field"><label>Bankéř</label><span class="line"></span></div>
-  </div>
+  <h2>Poznámky a domluva</h2>
+  <div class="field"><span class="multi-line" style="min-height:140px;"></span></div>
 </div>`
         ));
       }
